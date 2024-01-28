@@ -1,14 +1,46 @@
 import pygame 
-from sys import exit 
+import os.path
+import sys
+import numpy as np
+import Renderer
+#sys.path.append(os.path.join(os.path.dirname(__file__), 'Renderer.py'))
+
+#import matplotlib.pyplot as plt
+#import cv2
+
 
 pygame.init()
-screen = pygame.display.set_mode((800, 400))
+state = 'HOME'
+Renderer(state)
+
+
+screen_height = 800
+screen_width = 400
+
+screen = pygame.display.set_mode((screen_height, screen_width))
 test_surface  = pygame.image.load('game_images/Famous-old-video-game-scene.png.webp')
 test_surface = pygame.transform.scale(test_surface, (800, 400)).convert_alpha()
 
 
 test_font = pygame.font.Font(None,50)
 
+#def create_2d_array(x, y):
+ #   two_d = [[0 for x in range(x)] for y in range(y)]
+   # return two_d
+
+#two_d = create_2d_array(screen_height, screen_width)
+
+#path= 'game_images/Famous-old-video-game-scene.png.webp'
+
+#img= cv2.imread(path)
+
+#cv2.imshow('image', img)
+
+#imgMat= np.random.rand(100,100)
+
+#plt.imshow(imgMat,'gray')#omot gray if output required isn’t grayscale
+
+#plt.show()
 
 
 # for importing an image: pygame.image.load('graphics/sky/image.png')
