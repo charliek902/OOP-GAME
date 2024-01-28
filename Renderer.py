@@ -19,6 +19,8 @@ class Renderer():
             return self.handleSettings(self)
         elif self.state == 'SCORES':
             return self.handleHighScores(self)
+        elif self.state == 'PLAY':
+            return self.handlePlay(self)
 
 
     def handleHomeScreen(self):
@@ -31,6 +33,8 @@ class Renderer():
         print('settings')
     def handleHighScores(self):
         print('high scores')
+    def handlePlay(self):
+        print('play!')
         
         
         
