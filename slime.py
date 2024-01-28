@@ -2,16 +2,16 @@ import pygame
 import os.path
 import sys
 import numpy as np
-import Renderer
+from Renderer import Renderer
 #sys.path.append(os.path.join(os.path.dirname(__file__), 'Renderer.py'))
 
 #import matplotlib.pyplot as plt
 #import cv2
 
-
 pygame.init()
 state = 'HOME'
-Renderer(state)
+renderer = Renderer()
+print(renderer.state)
 
 
 screen_height = 800
