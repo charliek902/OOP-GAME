@@ -10,6 +10,7 @@ test_surface = pygame.transform.scale(test_surface, (800, 400)).convert_alpha()
 test_font = pygame.font.Font(None,50)
 
 
+
 # for importing an image: pygame.image.load('graphics/sky/image.png')
 # any kind of graphical import will be its own surface 
 
@@ -24,6 +25,7 @@ pacman_y_position = 80
 # takes a surface and puts a rectangle around it 
 pacman_rec = pacman_surface.get_rect(topleft = (pacman_x_position, pacman_y_position))
 first = 1
+gravity = 0
 
 
 while True: 
@@ -32,9 +34,30 @@ while True:
 
     # check for all possible type of player input 
     for event in pygame.event.get():
+
+
+        # we could have a class which is like a keyboard handler to handle the key changes... 
+
         if event.type == pygame.QUIT:
             pygame.quit()
             exit()
+        # to make the player go up every time you click on it 
+      #  if event.type == pygame.MOUSEBUTTONDOWN:
+        #    if pacman_rec.collidepoint(event.pos):
+          #      gravity -= 15
+
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE:
+                print('space pressed')
+                gravity -= 10
+            else:
+                print('key pressed!')
+        if event.type == pygame.KEYUP:
+            print('key up!')
+        mouse_position = pygame.mouse.get_pos()
+       # if pacman_rec.collidepoint((mouse_position)): 
+       #     print('collision' + str(first)) 
+       #     first += 1 
 
     screen.blit(test_surface, (0,0))
     screen.blit(test__font_surface, (300, 50))
@@ -42,13 +65,22 @@ while True:
     # to move the image, you move the rectangle rather than the surface itself... 
     pacman_rec.left += 1
     screen.blit(pacman_surface, pacman_rec)
-    # printing out rectangle is really useful for dimensions purposes... 
-    mouse_position = pygame.mouse.get_pos()
-    if pacman_rec.collidepoint((mouse_position)): 
-        print('collision' + str(first)) 
-        first += 1 
+    gravity += 1
+
+
+    # printing out rectangle is really useful for dimensions purposes...
 
     if pacman_rec.x >= 620: pacman_rec.x  = 170
+    pacman_rec.y += gravity
+    if pacman_rec.y >= 400: 
+        pacman_rec.y  = 80
+        pacman_rec.x  = 170
+        gravity = 0
+
+    clock = pygame.time.Clock()
+    FPS = 60  # Set your desired frames per second
+    clock.tick(FPS)
+
     pygame.display.update()
 
 
