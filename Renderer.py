@@ -29,25 +29,61 @@ class Renderer():
             return self.handleHighScores(self)
         elif self.state == 'PLAY':
             return self.handlePlay(self)
+        elif self.state == 'PAUSE':
+            return self.handlePause(self)
+        elif self.state == 'QUIT':
+            return self.handleQuit(self)
+
+
 
     def handleLogin(self):
         print('LOGIN page')
+
     def handleCreateProfile(self):
         print('creating a profile')
+
+
     def handleUserScores(self):
         print('viewing user high scores')
+
+
     def handleHomeScreen(self):
         print('HOME')
+
+
     def handleNextLevel(self):
         print('next level')
+
+
     def handleDeath(self):
         print('death')
+
+
     def handleSettings(self):
         print('settings')
+
+
     def handleHighScores(self):
         print('high scores')
+
+
     def handlePlay(self):
         print('play!')
+
+
+    def handlePause(self):
+        print('Paused!')
+
+
+    def handleQuit(self):
+        print('QUIT')
+
+
+
+
+    
+    
+    
         
 
 
