@@ -1,8 +1,11 @@
 # this class handles page renderering from different changes in state of the Game
+import pygame
 
 class Renderer():
     def __init__(self):
         self.state = 'LOGIN'
+        self.screen_height = 800
+        self.screen_width = 400
 
     def set_state(self, state):
         self.state = state
@@ -38,6 +41,8 @@ class Renderer():
 
     def handleLogin(self):
         print('LOGIN page')
+        
+
 
     def handleCreateProfile(self):
         print('creating a profile')
@@ -73,6 +78,10 @@ class Renderer():
 
     def handlePause(self):
         print('Paused!')
+        self.screen = pygame.display.set_mode((self.screen_height, self.screen_width))
+        self.test_surface = pygame.image.load('game_images/pause.png')
+        self.test_surface = pygame.transform.scale(self.test_surface, (800, 400)).convert_alpha()
+
 
 
     def handleQuit(self):
