@@ -18,6 +18,8 @@ pygame.init()
 renderer = Renderer()
 game_state = game(renderer, 'active', 800, 400)
 shooter = player('alive', 170, 80, 10, 10, 10, 0)
+# level generator will create the enemies 
+
 easy_tank = tank('alive', 150, 150, 100, shooter)
 medium_tank = tank('alive', 300, 300, 100, shooter)
 
