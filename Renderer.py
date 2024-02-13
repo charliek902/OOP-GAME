@@ -77,15 +77,20 @@ class Renderer():
 
 
     def handlePause(self):
-        print('Paused!')
-        self.screen = pygame.display.set_mode((self.screen_height, self.screen_width))
-        self.test_surface = pygame.image.load('game_images/pause.png')
-        self.test_surface = pygame.transform.scale(self.test_surface, (800, 400)).convert_alpha()
-
+        if self.state == 'PAUSE':
+            print('resume the game!')
+            # here we need to go back to the prior screen....
+            # need to remove the image that is blitted onto the screen... 
+        else:
+            self.state = 'PAUSE'
+            self.screen = pygame.display.set_mode((self.screen_height, self.screen_width))
+            self.test_surface = pygame.image.load('game_images/pause.png')
+            self.test_surface = pygame.transform.scale(self.test_surface, (800, 400)).convert_alpha()
 
 
     def handleQuit(self):
-        print('QUIT')
+        pygame.quit()
+        exit()
 
 
 

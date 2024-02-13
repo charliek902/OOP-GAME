@@ -12,6 +12,12 @@ class keyboardHandler():
             pygame.quit()
             exit()
         if event.type == pygame.KEYDOWN:
+            if event.unicode == ' ':
+                self.player.fire()
+        if event.type == pygame.KEYDOWN:
+            if event.unicode == '\x1b' or event.unicode == 'q':
+                self.renderer.handleQuit()
+        if event.type == pygame.KEYDOWN:
             if event.unicode == 'p':
                 self.renderer.handlePause()
         if event.type == pygame.KEYDOWN:
@@ -26,30 +32,23 @@ class keyboardHandler():
     
     def handleKeyPress(self, keys):
         if keys[pygame.K_UP]:
-            print('true')
             self.player.move_up()
         if keys[pygame.K_DOWN]:
-            print('true')
             self.player.move_down()
+        if keys[pygame.K_LEFT]:
+            self.player.turn_left()
+        if keys[pygame.K_RIGHT]:
+            self.player.turn_right()
+                
+       #### if keys[pygame.K_LEFT]:
+         ###   self.player.turn_left()
+       ## if keys[pygame].K_RIGHT:
+          #  self.player.turn_right()
 
 
     
 
 
            
-   ##     elif event.type == pygame.KEYUP:
-            
-            #mouse_position = pygame.mouse.get_pos()
-    #    elif event.type == pygame.
-
-
-    #    else:
-            # there should be a handling of controls (arrow keys)
-          ###  print('handle!')
-            # if not arrow arrow keys, check if the keys p or q are pressed 
-         ##   print('pause or quit')
-            # if not those keys check if any numbers are pressed (will handle the cases when weapons are swapped)
-         #   print('weapon change')
-
 
     

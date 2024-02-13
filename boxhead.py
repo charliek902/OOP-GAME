@@ -7,12 +7,20 @@ from entity import entity
 from player import player
 from game import game
 from healthbar import healthbar
+from tank import tank
+
+
+# state, position_x, position_y, health, player
+
 
 # construcing all the necessary objects to play the game... 
 pygame.init()
 renderer = Renderer()
 game_state = game(renderer, 'active', 800, 400)
-shooter = player('alive', 170, 80, 10, -90, 90, 0)
+shooter = player('alive', 170, 80, 10, 10, 10, 0)
+easy_tank = tank('alive', 150, 150, 100, shooter)
+medium_tank = tank('alive', 300, 300, 100, shooter)
+
 command_handler = keyboardHandler(renderer, shooter)
 
 # health, x_position, y_position, width, height, points, screen
@@ -40,13 +48,15 @@ while True:
         
 
 
-
-
-    command_handler.handleKeyPress(keys)
-    player_healthbar.display()
-    game_state.update()
-    shooter.update()
-    pygame.event.pump()
+        
+    if renderer.state == 'LOGIN':
+      command_handler.handleKeyPress(keys)
+      player_healthbar.display()
+      game_state.update()
+      easy_tank.update()
+      medium_tank.update()
+      shooter.update()
+      pygame.event.pump()
         
        # if shooter_rec.collidepoint((mouse_position)): 
        #     print('collision' + str(first)) 

@@ -41,14 +41,11 @@ class player(entity):
         return self.position_x, self.position_y
     
     def move_down(self):
-        if self.position_x < 0 and self.angle == 0:
-            self.move_down()
-            self.shooter_rec = self.image.get_rect(topleft = (self.position_x, self.position_y))
-            self.shooter_rec.x += self.speed * math.sin(math.radians(self.angle))
-            self.shooter_rec.y += self.speed * math.cos(math.radians(self.angle))
-            self.position_x = self.shooter_rec.x
-            self.position_y = self.shooter_rec.y
-            self.running = True
+        self.shooter_rec = self.image.get_rect(topleft = (self.position_x, self.position_y))
+        self.shooter_rec.x += self.speed * math.sin(math.radians(self.angle -90))
+        self.shooter_rec.y += self.speed * math.cos(math.radians(self.angle -90))
+        self.position_x = self.shooter_rec.x
+        self.position_y = self.shooter_rec.y
 
 
     def move_up(self):
@@ -56,8 +53,8 @@ class player(entity):
         if self.position_y < 0 and self.angle == 0:
             self.move_down()
         else:
-            self.shooter_rec.x -= self.speed * math.sin(math.radians(self.angle))
-            self.shooter_rec.y -= self.speed * math.cos(math.radians(self.angle))
+            self.shooter_rec.x -= self.speed * math.sin(math.radians(self.angle -90))
+            self.shooter_rec.y -= self.speed * math.cos(math.radians(self.angle -90))
             self.position_x = self.shooter_rec.x
             self.position_y = self.shooter_rec.y
 
@@ -65,47 +62,44 @@ class player(entity):
  # need to transform the image to a better resolution.... 
     def turn_left(self):
         prev_center = self.shooter_rec.center
+        self.image = pygame.image.load('game_images/shooter.png').convert()
         self.image = pygame.transform.scale(self.image, self.DEFAULT_IMAGE_SIZE)
-        self.image = pygame.transform.rotate(self.image, self.rotation_speed)
+        self.image = pygame.transform.rotate(self.image, self.angle + self.rotation_speed)
         self.rect = self.image.get_rect()
         self.rect.center = prev_center
-        self.angle += 90
+        self.angle += self.rotation_speed
+
+
     
     def turn_right(self):
         prev_center = self.shooter_rec.center
+        self.image = pygame.image.load('game_images/shooter.png').convert()
         self.image = pygame.transform.scale(self.image, self.DEFAULT_IMAGE_SIZE)
-        self.image = pygame.transform.rotate(self.image, 0 - self.rotation_speed)
+        self.image = pygame.transform.rotate(self.image, self.angle - self.rotation_speed)
         self.rect = self.image.get_rect()
         self.rect.center = prev_center
-        self.angle -= 90
+        self.angle -= self.rotation_speed
     
 
     def move_Left_UP_diagonal(self):
         self.angle = -45
         prev_center = self.shooter_rec.center
-        self.image = pygame.transform.scale(self.image, self.DEFAULT_IMAGE_SIZE)
-        self.image = pygame.transform.rotate(self.image, self.angle)
+       # self.image = pygame.transform.scale(self.image, self.DEFAULT_IMAGE_SIZE)
+        self.image = pygame.image.load('game_images/shooter.png').convert()
+        image_clean = self.image
+        self.image = pygame.transform.rotate(image_clean, self.angle)
         self.rect = self.image.get_rect()
         self.rect.center = prev_center
-
-
-
-   # def move_Right_UP_diagonal(self):
-                
-  #  def move_Right_DOWN_diagonal(self):
-
-   # def move_Left_DOWN_diagonal(self):
-
-        
-
-
+    
+    def get_health(self):
+        return self.health
 
     def update(self):
         self.check_health()
         self.screen.blit(self.image, self.shooter_rec)
 
 
-    def fire():
+    def fire(self):
         print('fires!')
         
     def reload():
