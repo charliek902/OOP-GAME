@@ -16,7 +16,7 @@ from tank import tank
 # construcing all the necessary objects to play the game... 
 pygame.init()
 renderer = Renderer()
-game_state = game(renderer, 'active', 800, 400)
+game_state = game(renderer, 'active', 800, 400, renderer.screen)
 shooter = player('alive', 170, 80, 5, 10, 5, 0)
 # level generator will create the enemies 
 
@@ -39,7 +39,10 @@ print(renderer.state)
 first = 1
 gravity = 0
 
-while True: 
+play_game = True
+renderer.set_state('PLAY') 
+
+while play_game: 
     # draw all our elements 
     # update everything 
 
@@ -51,12 +54,15 @@ while True:
 
 
         
-    if renderer.state == 'LOGIN':
+    if renderer.state == 'PLAY':
       command_handler.handleKeyPress(keys)
       player_healthbar.display()
-      game_state.update()
-      easy_tank.update()
-      medium_tank.update()
+      if game_state.renderer.state == 'PAUSE':
+        game_state.renderer.handlePause()
+      else:
+        game_state.update()
+        easy_tank.update()
+        medium_tank.update()
       shooter.update()
       pygame.event.pump()
         

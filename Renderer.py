@@ -6,6 +6,7 @@ class Renderer():
         self.state = 'LOGIN'
         self.screen_height = 800
         self.screen_width = 400
+        self.screen = pygame.display.set_mode((self.screen_height, self.screen_width))
 
     def set_state(self, state):
         self.state = state
@@ -30,8 +31,6 @@ class Renderer():
             return self.handleSettings(self)
         elif self.state == 'SCORES':
             return self.handleHighScores(self)
-        elif self.state == 'PLAY':
-            return self.handlePlay(self)
         elif self.state == 'PAUSE':
             return self.handlePause(self)
         elif self.state == 'QUIT':
@@ -72,22 +71,17 @@ class Renderer():
         print('high scores')
 
 
-    def handlePlay(self):
-        print('play!')
-
 
     def handlePause(self):
-        if self.state == 'PAUSE':
-            print('resume the game!')
-            # here we need to go back to the prior screen....
-            # need to remove the image that is blitted onto the screen... 
-        else:
+        if self.state != 'PAUSE':
+            print('goes here!')
             self.state = 'PAUSE'
-            self.screen = pygame.display.set_mode((self.screen_height, self.screen_width))
-            self.test_surface = pygame.image.load('game_images/pause.png')
+            self.test_surface = pygame.image.load('game_images/background.png')
             self.test_surface = pygame.transform.scale(self.test_surface, (800, 400)).convert_alpha()
-
-
+            self.screen.blit(self.test_surface, (0,0))
+        else:
+            self.state = 'PLAY'
+    
     def handleQuit(self):
         pygame.quit()
         exit()
