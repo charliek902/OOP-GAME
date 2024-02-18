@@ -21,7 +21,6 @@ class healthbar(entity):
         pygame.draw.rect(self.screen, "red", (self.position_x, self.position_y, self.width, self.height))
         pygame.draw.rect(self.screen, "green", (self.position_x, self.position_y, self.width * self.ratio, self.height))
 
-    
     def update(self):
         self.display()
 

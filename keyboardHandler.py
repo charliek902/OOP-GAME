@@ -33,11 +33,11 @@ class keyboardHandler():
     def handleKeyPress(self, keys):
         if keys[pygame.K_UP]:
             self.player.move_up()
-        if keys[pygame.K_DOWN]:
+        elif keys[pygame.K_DOWN]:
             self.player.move_down()
-        if keys[pygame.K_LEFT]:
+        elif keys[pygame.K_LEFT]:
             self.player.turn_left()
-        if keys[pygame.K_RIGHT]:
+        elif keys[pygame.K_RIGHT]:
             self.player.turn_right()
                 
        #### if keys[pygame.K_LEFT]:
