@@ -13,9 +13,18 @@ from tank import tank
 # state, position_x, position_y, health, player
 
 
-# construcing all the necessary objects to play the game... 
+player_socket_connection = True
 pygame.init()
+#LOGIN MENU gets rendered below...
 renderer = Renderer()
+
+
+
+
+
+
+
+
 game_state = game(renderer, 'active', 800, 400, renderer.screen)
 shooter = player('alive', 170, 80, 5, 10, 5, 0)
 # level generator will create the enemies 
@@ -39,10 +48,14 @@ print(renderer.state)
 first = 1
 gravity = 0
 
-play_game = True
-renderer.set_state('PLAY') 
+#renderer.set_state('PLAY')
 
-while play_game: 
+
+
+
+
+
+while player_socket_connection: 
     # draw all our elements 
     # update everything 
 
@@ -54,40 +67,63 @@ while play_game:
 
 
         
-    if renderer.state == 'PLAY':
+    if game_state.renderer.state == 'PLAY':
       command_handler.handleKeyPress(keys)
       player_healthbar.display()
       if game_state.renderer.state == 'PAUSE':
         game_state.renderer.handlePause()
+      elif game_state.renderer.state == 'HOME':
+        game_state.renderer.handleHomeScreen()
+      elif game_state.renderer.state == 'QUIT':
+        game_state.renderer.handleQuit()
       else:
         game_state.update()
         easy_tank.update()
         medium_tank.update()
-      shooter.update()
-      pygame.event.pump()
-        
-       # if shooter_rec.collidepoint((mouse_position)): 
-       #     print('collision' + str(first)) 
-       #     first += 1 
+        shooter.update()
+
+    elif game_state.renderer.state == 'LOGIN':
+      game_state.renderer.handleLogin()
+    elif game_state.renderer.state == 'CREATE':
+      game_state.renderer.handleCreateProfile()
+    elif game_state.renderer.state == 'USER SCORES':
+      game_state.renderer.handleUserScores()
+      
+       
+       
 
 
-  #  gravity += 1
-
-
-    # printing out rectangle is really useful for dimensions purposes...
-
-  #  if shooter_rec.x >= 620: shooter_rec.x  = 170
-  #  shooter_rec.y += gravity
-  #  if shooter_rec.y >= 400: 
-   #     shooter_rec.y  = 80
-   #     shooter_rec.x  = 170
-    #    gravity = 0
+       
+      
 
     clock = pygame.time.Clock()
     FPS = 60  # Set your desired frames per second
     clock.tick(FPS)
 
     pygame.display.update()
+
+
+"""
+        if self.state == 'LOGIN':
+            self.handleLogin(self)
+        elif self.state == 'CREATE':
+            return self.handleCreateProfile(self)
+        elif self.state == 'USER SCORES':
+            return self.handleUserScores(self)
+        elif self.state == 'HOME':
+            return self.handleHomeScreen(self)
+        elif self.state == 'NEXT LEVEL':
+            return self.handleNextLevel(self)
+        elif self.state == 'DEATH':
+            return self.handleDeath(self)
+        elif self.state == 'SETTINGS':
+            return self.handleSettings(self)
+        elif self.state == 'SCORES':
+            return self.handleHighScores(self)
+        elif self.state == 'PAUSE':
+            return self.handlePause(self)
+        elif self.state == 'QUIT':
+            return self.handleQuit(self) """
 
 
 

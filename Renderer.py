@@ -39,9 +39,13 @@ class Renderer():
 
 
     def handleLogin(self):
-        print('LOGIN page')
-        
+        self.state == 'LOGIN'
+        self.test_surface = pygame.image.load('game_images/background.png')
+        self.test_surface = pygame.transform.scale(self.test_surface, (800, 400)).convert_alpha()
+        self.screen.blit(self.test_surface, (0,0))
 
+        # need to create the login page / create a profile page here...
+        
 
     def handleCreateProfile(self):
         print('creating a profile')
