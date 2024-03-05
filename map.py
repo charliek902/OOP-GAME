@@ -1,5 +1,6 @@
 from entity import entity
 import pygame
+import heapq
 
 # this will be a singleton mapping object for all the entities within the game
 
@@ -34,11 +35,23 @@ class map():
         return [self.player.x - 100, self.player.x + 100, self.player.y - 100, self.player.y + 100]
 
     # here we want to filter the map for the entities which are closest to the object (I say within 50 pixels)
-    def get_nearby_entities(self, object):
+    def get_nearby_entities_on_trajectory(self, object):
+        entities_to_dodge = []
+        heapq.heapify(entities_to_dodge)
         self.convert_entity_map_to_array()
         # here we need to filter the entities and get entities and their types within the radius of the entitiy in question
         nearby_entities = self.entities.filter(self.retrieve_entities(object), self.entities)
-        return nearby_entities
+        for entity in nearby_entities:
+            if entity.type == 'BULLET' or entity.type == 'TANK':
+                distance = 0
+                # need to calculate the distance between the player and the entity and also need to 
+                # calculate the trajectory of the entity and whether it will hit the tank 
+                
+
+
+                heapq.heappush(entities_to_dodge, (distance, entity))
+
+        return entities_to_dodge
     
     def retrieve_entities(self, object):
         lower_x_bound = object.x_position - 50

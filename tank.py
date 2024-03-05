@@ -5,6 +5,7 @@ from entity import entity
 from tankMovement import tankMovement
 import pygame
 import random
+import heapq
 
 # needs to turn move towards the player
 # needs to calculate the quickest path to the distance from the player (through a dfs) ----> strategy here???
@@ -51,12 +52,12 @@ class tank(enemy, entity):
 
     def interpret_state(self):
         # should first check if state should be DODGE
-        entities_nearby = self.map.get_nearby_entities()
-        if len(entities_nearby) > 0:
+        entities_nearby_and_on_trajectory = self.map.get_nearby_entities_on_trajectory()
+        if len(entities_nearby_and_on_trajectory) > 0:
             # if one is a bullet --> set state to Dodge
             self.state = 'DODGE'
             # dodge the closest bullet 
-            self.dodge_entity()
+            self.dodge_entity(entities_nearby_and_on_trajectory)
 
         # if the enemy is within firing distance, enemy should fire
         user_radius = self.map.get_user_radius_border()
@@ -110,4 +111,6 @@ class tank(enemy, entity):
         self.screen.blit(self.image, self.tank_rec)
     
     def dodge_entity(self, entities):
-        print('dodging action to be done here!')
+        closest_entity = heapq.heappop(entities)
+        
+        # need to dodge the closest entity 

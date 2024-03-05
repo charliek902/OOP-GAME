@@ -18,10 +18,8 @@ pygame.init()
 #LOGIN MENU gets rendered below...
 renderer = Renderer()
 
-
 # we need to have a level generator --> this would create the enemy tanks 
 # (perhaps a factor class depending on the level generator)
-
 
 game_state = game(renderer, 'active', 800, 400, renderer.screen)
 shooter = player('alive', 170, 80, 5, 0, 5, 0)
