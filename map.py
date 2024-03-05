@@ -7,9 +7,10 @@ import heapq
 class map():
     def __init__(self, player):
         self.player = player
-        self.entity_hash_names = []
+        self.entity_hash_names = set()
         self.entity_map = {}
         self.entities = []
+        self.enemy_tanks = []
     
     def get_entity(self, name):
         return self.entity_map[name]
@@ -17,7 +18,17 @@ class map():
     def add_entity(self, entity):
         if entity.name:
             self.entity_map[entity.name] = [entity.position_x, entity.position_y]
-            self.entity_hash_names.append(entity.name)
+            self.entity_hash_names.add(entity.name)
+    
+    def add_enemy_tank(self, tank):
+        self.enemy_tanks.append(tank)
+    
+    def del_enemy_tank(self, tank):
+        self.enemy_tanks.remove(tank)
+    
+    def get_enemy_tanks(self):
+        return self.enemy_tanks
+
 
     def remove_entity(self, entity):
         if entity.name:
@@ -62,6 +73,8 @@ class map():
          and self.entities.y_position < upper_y_bound and self.entities.y_position > lower_y_bound:
             return True
         return False
+
+
     
     # we need to check this map for nearby entities (tanks will use this and so will the user)
     

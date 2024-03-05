@@ -1,46 +1,36 @@
-# 1/2 of all tanks will be red, 1/3 will be blue and 1/6 will be green (order of powers and difficuly)
+from tankFactory import tankFactory 
 
-# this will be a factory class which will make numerous enemies
 class levelGenerator():
-    def __init__(self):
+    def __init__(self, map):
         self.level = 1
-        self.tanks = 6
-        self.red_tanks = 3
-        self.enemy_health = 50
-        self.blue_tanks = 2
-        self.green_tanks = 1
-        self.remaining_tanks = 6
-        self.MAX = 96
+        self.enemy_tank_factory = tankFactory()
+        self.enemy_tanks = []
+        self.map = map
         self.rendering = False
-    def create_tanks(self):
-        print('creates the tanks here with the level generation')
-        # we should not go above the maximum amount of tanks, instead we should decrease the time between waves 
-        # and increase enemy player health 
-        self.create_wave()
+        # creating enemy tank factory on constructor... 
+        self.enemy_tank_factory.create_enemy_tanks(self.level)
+
+
+    # class tank(enemy, entity):
+    # def __init__(self, state, position_x, position_y, health, player, map, type):
 
     def level_up(self):
         self.level += 1
-        self.tanks *= 2
-        self.red_tanks *= 2
-        self.blue_tanks *= 2
-        self.green_tanks = 2
-        self.create_tanks()
-    
-    def update_level(self):
-        # need to get the number of tanks left on the screen
-        if self.remaining_tanks == 0:
-            self.render_level_up()
-            self.level_up()
+        self.render_level_up()
+        self.rendering = False
+        self.enemy_tank_factory.create_enemy_tanks(self.level)
     
     def render_level_up(self):
         self.rendering = True
-        print('levelling up side of things appear on the screen')
+        print('levelling up appear on the screen')
     
-    def create_wave(self):
-        # each wave should ideally have the maximum 10 seconds between waves 
-        # each wave should be spaced out 
-        # with evey level we need to also increase enemy health as well
-        print('waves of enemies created!')
+    def update(self):
+        if len(self.map.get_enemy_tanks()) == 0:
+            self.level_up()
+
+
+
+
 
 
     
