@@ -24,27 +24,14 @@ renderer = Renderer()
 
 game_state = game(renderer, 'active', 800, 400, renderer.screen)
 shooter = player('alive', 170, 80, 5, 0, 5, 0)
-
 # level generator will create the enemies 
 map_of_game = map(shooter)
 game_level_generator = levelGenerator(map_of_game, shooter)
-
-
 command_handler = keyboardHandler(renderer, shooter)
 
 # health, x_position, y_position, width, height, points, screen
-
 player_healthbar = healthbar(720, 20, 60 ,10, 100, game_state.test_surface, shooter)
-print(renderer.state)
 
-# before the loop we need to initialize all the objects - the enemies, the walls, the player, health, health bar, guns
-# bullets, background image, keyboard handler and renderer, maybe also music and sound effects 
-
-
-# takes a surface and puts a rectangle around it 
-
-first = 1
-gravity = 0
 
 #renderer.set_state('PLAY')
 
@@ -65,6 +52,8 @@ while player_socket_connection:
     #  easy_tank.update()
    #   medium_tank.update()
       shooter.update()
+      game_level_generator.update()
+
 
     elif game_state.renderer.state == 'LOGIN':
       game_state.renderer.handleLogin()
@@ -101,6 +90,7 @@ while player_socket_connection:
             return self.handlePause(self)
         elif self.state == 'QUIT':
             return self.handleQuit(self) """
+
 
 
 

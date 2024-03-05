@@ -28,6 +28,10 @@ class levelGenerator():
     def update(self):
         if len(self.map.get_enemy_tanks()) == 0:
             self.level_up()
+        else:
+            enemies = self.enemy_tank_factory.get_enemies()
+            for enemy in enemies:
+                enemy.update()
 
 
 
