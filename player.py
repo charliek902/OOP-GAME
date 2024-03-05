@@ -8,7 +8,7 @@ import math
 # find natural position of the gun on the player depending on the top left and the angle of the player
 
 class player(entity):
-    def __init__(self, state, position_x, position_y, speed, angle, rotation_speed, points):
+    def __init__(self, state, position_x, position_y, speed, angle, rotation_speed, points, map):
         pygame.sprite.Sprite.__init__(self)
         self.position_x = position_x
         self.position_y = position_y
@@ -20,6 +20,7 @@ class player(entity):
         player_health = health(100)
         self.health = player_health.get_health()
         self.points = points
+        self.map = map
 
         self.bullets = 10
         self.reloading = False
@@ -55,6 +56,7 @@ class player(entity):
 
     def move_up(self):
         self.turn(-270)
+        self.check_can_move()
         self.move_player()
     
     def move_right(self):
@@ -97,6 +99,9 @@ class player(entity):
             self.shooter_rec.y -= self.speed * math.cos(math.radians(self.angle - 90))
             self.position_x = self.shooter_rec.x
             self.position_y = self.shooter_rec.y
+    
+    def set_map(self, map):
+        self.map = map
 
 
  # need to transform the image to a better resolution.... 
@@ -121,6 +126,15 @@ class player(entity):
         print(self.angle)
         print('fire')
         print('fires!')
+
+    def check_can_move(self):
+        possible_x_position = self.shooter_rec.x - self.speed * math.sin(math.radians(self.angle - 90))
+        possible_y_position = self.shooter_rec.y - self.speed * math.cos(math.radians(self.angle - 90))
+        map_entities = self.map.get_entities()
+        # need to check map_entities if their radius intersects with the player...
+
+
+
         
     def reload():
         print('reloading')

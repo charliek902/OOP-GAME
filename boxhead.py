@@ -23,9 +23,12 @@ renderer = Renderer()
 # (perhaps a factor class depending on the level generator)
 
 game_state = game(renderer, 'active', 800, 400, renderer.screen)
-shooter = player('alive', 170, 80, 5, 0, 5, 0)
+shooter = player('alive', 170, 80, 5, 0, 5, 0, None)
+
 # level generator will create the enemies 
 map_of_game = map(shooter)
+# setting the map here... 
+shooter.set_map(map_of_game)
 game_level_generator = levelGenerator(map_of_game, shooter)
 command_handler = keyboardHandler(renderer, shooter)
 
@@ -49,8 +52,6 @@ while player_socket_connection:
       command_handler.handleKeyPress(keys)
       player_healthbar.display()
       game_state.update()
-    #  easy_tank.update()
-   #   medium_tank.update()
       shooter.update()
       game_level_generator.update()
 

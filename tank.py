@@ -60,23 +60,25 @@ class tank(enemy, entity):
             self.dodge_entity(entities_nearby_and_on_trajectory)
 
         # if the enemy is within firing distance, enemy should fire
-        user_radius = self.map.get_user_radius_border()
+        else:
+            # this needs to be better... 
+            user_radius = self.map.get_user_radius_border()
+            if user_radius > 0:
+                self.state == 'FIRE'
+                # if current tank within this radius, fire! 
+                self.fire()
 
-        self.state == 'FIRE'
-        # if current tank within this radius, fire! 
-        self.fire()
+                # else state should be in search Mode 
 
-        # else state should be in search Mode 
+                # 2 different types of search Mode --> check if you can go straight to the player 
+                # check if path is clear 
+                # else you need to follow the dfs path 
+                # this path would have to be constructed each time (maybe the strategy class would have to do this....)
+            else:
+                self.state == 'SEARCH'
+                self.moveToPlayer()
+        
 
-        # 2 different types of search Mode --> check if you can go straight to the player 
-        # check if path is clear 
-        # else you need to follow the dfs path 
-        # this path would have to be constructed each time (maybe the strategy class would have to do this....)
-
-        self.state == 'SEARCH'
-        self.moveToPlayer()
-
-    
     def set_hash_name(self, map):
         name = hash(random.randint(0,1000))
         while name in map.entity_hash_names:

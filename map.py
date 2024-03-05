@@ -63,6 +63,12 @@ class map():
                 heapq.heappush(entities_to_dodge, (distance, entity))
 
         return entities_to_dodge
+
+    def get_entities(self):
+        self.convert_entity_map_to_array()
+        return self.entities
+
+
     
     def retrieve_entities(self, object):
         lower_x_bound = object.x_position - 50
