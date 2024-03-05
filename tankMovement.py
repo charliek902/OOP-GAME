@@ -1,13 +1,13 @@
-from entity import entity
+import pygame
 
 # this is a strategy class aimed at dictating the movement of the enemy tank 
 
-class tankMovement(entity):
-    def __init__(self, map, entity):
+class tankMovement():
+    def __init__(self, map):
         self.map = map
-        self.entity = entity
+
     
-    def move(self):
+    def move(self, x, y):
         self.generate_path()
 
 
@@ -16,7 +16,6 @@ class tankMovement(entity):
             return self.generate_shortest_path()
         else:
             return self.generate_dfs_path()
-
 
 
     def generate_shortest_path(self):

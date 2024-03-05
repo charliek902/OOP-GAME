@@ -29,8 +29,8 @@ shooter = player('alive', 170, 80, 5, 0, 5, 0)
 
 map_of_game = map(shooter)
 
-easy_tank = tank('SEARCH', 150, 150, 100, shooter, map_of_game)
-medium_tank = tank('SEARCH', 300, 300, 100, shooter, map_of_game)
+easy_tank = tank('SEARCH', 150, 150, 100, shooter, map_of_game, 'TANK')
+medium_tank = tank('SEARCH', 300, 300, 100, shooter, map_of_game, 'TANK')
 
 map_of_game.add_entity(easy_tank)
 map_of_game.add_entity(medium_tank)

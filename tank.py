@@ -6,8 +6,6 @@ from tankMovement import tankMovement
 import pygame
 import random
 
-
-
 # needs to turn move towards the player
 # needs to calculate the quickest path to the distance from the player (through a dfs) ----> strategy here???
 # so needs to go to the outer rim of player radius, for each iteration needs to calculate path to player
@@ -15,18 +13,13 @@ import random
 
 # dfs itself would prioritise directions to be closer to the player for each iteration of the dfs 
 
-
 # we would have a path (array of coordinates) ---> this would constanly be appended to 
-
 
 # within range the tanks need to turn towards the player 
 
 # for other tanks their behavior will be different 
 
 # defualt state of the tank is down 
-
-
-
 
 # different kinds of STATES for the tank:
 
@@ -36,7 +29,7 @@ import random
 
 
 class tank(enemy, entity):
-    def __init__(self, state, position_x, position_y, health, player, map):
+    def __init__(self, state, position_x, position_y, health, player, map, type):
         self.state = state
         self.entity_hash_name = hash(random.randint(0, 1000))
         self.position_x = position_x
@@ -51,15 +44,19 @@ class tank(enemy, entity):
         self.name = self.set_hash_name(map)
         self.map = map
         self.move_strategy = tankMovement(self.map)
+        # the initial angle of the tank is facing downwards... 
+        self.angle = 180
+        self.type = type
     
 
     def interpret_state(self):
         # should first check if state should be DODGE
         entities_nearby = self.map.get_nearby_entities()
-        # if one is a bullet --> set state to Dodge
-        self.state = 'DODGE'
-        # dodge the closest bullet 
-        self.dodge_entity()
+        if len(entities_nearby) > 0:
+            # if one is a bullet --> set state to Dodge
+            self.state = 'DODGE'
+            # dodge the closest bullet 
+            self.dodge_entity()
 
         # if the enemy is within firing distance, enemy should fire
         user_radius = self.map.get_user_radius_border()
@@ -75,10 +72,9 @@ class tank(enemy, entity):
         # else you need to follow the dfs path 
         # this path would have to be constructed each time (maybe the strategy class would have to do this....)
 
-    
-    def check_radius(self):
-        print('checks radius')
-        # maybe this should check coordinates of the singleton map object
+        self.state == 'SEARCH'
+        self.moveToPlayer()
+
     
     def set_hash_name(self, map):
         name = hash(random.randint(0,1000))
@@ -89,30 +85,27 @@ class tank(enemy, entity):
     def turnToPlayer():
         print('turns to the player')
  
-    def move(self):
+    def moveToPlayer(self):
         print('moves to player!')
-        path = self.move_strategy.generate_path()
-        self.move_to_player(path)
+        path = self.move_strategy.move(self.position_x, self.position_y)
+        self.followPath(path)
 
         # I think we need to implement a strategy class here
     
 
-    def move_to_player(self, path):
+    def followPath(self, path):
+        # should turn to the coordinate on the path 
+        # and then move towards it... 
+
         print('now we need to move to the player...')
 
-    
- 
-
-        
-
-    
     def fire():
         print('attacks!')
         # NB: this should be firing when at a certain distance 
 
     def update(self):
-        self.move()
-        self.check_collide()
+        self.moveToPlayer()
+       # self.check_collide()
         self.map.update_entity_location(self.name, self.position_x, self.position_y)
         self.screen.blit(self.image, self.tank_rec)
     

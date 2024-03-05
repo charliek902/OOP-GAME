@@ -18,7 +18,7 @@ class enemy(entity):
         print('searches for the player')
 
     @abstractmethod
-    def attack():
+    def fire():
         print('attacks!')
 
     @abstractmethod
