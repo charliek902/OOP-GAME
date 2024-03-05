@@ -56,10 +56,7 @@ class keyboardHandler():
         elif keys[pygame.K_RIGHT]:
             self.player.move_right()
                 
-       #### if keys[pygame.K_LEFT]:
-         ###   self.player.turn_left()
-       ## if keys[pygame].K_RIGHT:
-          #  self.player.turn_right()
+
 
 
     
