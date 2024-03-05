@@ -8,6 +8,7 @@ from player import player
 from game import game
 from healthbar import healthbar
 from tank import tank
+from map import map
 
 
 # state, position_x, position_y, health, player
@@ -18,12 +19,22 @@ pygame.init()
 renderer = Renderer()
 
 
+# we need to have a level generator --> this would create the enemy tanks 
+# (perhaps a factor class depending on the level generator)
+
+
 game_state = game(renderer, 'active', 800, 400, renderer.screen)
 shooter = player('alive', 170, 80, 5, 0, 5, 0)
 # level generator will create the enemies 
 
-easy_tank = tank('alive', 150, 150, 100, shooter)
-medium_tank = tank('alive', 300, 300, 100, shooter)
+map_of_game = map(shooter)
+
+easy_tank = tank('SEARCH', 150, 150, 100, shooter, map_of_game)
+medium_tank = tank('SEARCH', 300, 300, 100, shooter, map_of_game)
+
+map_of_game.add_entity(easy_tank)
+map_of_game.add_entity(medium_tank)
+
 
 command_handler = keyboardHandler(renderer, shooter)
 

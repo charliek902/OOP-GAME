@@ -20,7 +20,6 @@ class player(entity):
         player_health = health(100)
         self.health = player_health.get_health()
         self.points = points
-        self.running = False
 
         self.bullets = 10
         self.reloading = False
@@ -89,8 +88,8 @@ class player(entity):
     def move_player(self, increaseSpeed=False):
         # this was built in due to noticeable differences in speeds between diagonals
         if increaseSpeed:
-            self.shooter_rec.x -= (self.speed + 1) * math.sin(math.radians(self.angle - 90))
-            self.shooter_rec.y -= (self.speed + 1) * math.cos(math.radians(self.angle - 90))
+            self.shooter_rec.x -= (self.speed + 0.7) * math.sin(math.radians(self.angle - 90))
+            self.shooter_rec.y -= (self.speed + 0.7) * math.cos(math.radians(self.angle - 90))
             self.position_x = self.shooter_rec.x
             self.position_y = self.shooter_rec.y
         else:
