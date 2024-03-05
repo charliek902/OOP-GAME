@@ -9,6 +9,7 @@ from game import game
 from healthbar import healthbar
 from tank import tank
 from map import map
+from levelGenerator import levelGenerator
 
 
 # state, position_x, position_y, health, player
@@ -23,15 +24,10 @@ renderer = Renderer()
 
 game_state = game(renderer, 'active', 800, 400, renderer.screen)
 shooter = player('alive', 170, 80, 5, 0, 5, 0)
+
 # level generator will create the enemies 
-
 map_of_game = map(shooter)
-
-easy_tank = tank('SEARCH', 150, 150, 100, shooter, map_of_game, 'TANK')
-medium_tank = tank('SEARCH', 300, 300, 100, shooter, map_of_game, 'TANK')
-
-map_of_game.add_entity(easy_tank)
-map_of_game.add_entity(medium_tank)
+game_level_generator = levelGenerator(map_of_game, shooter)
 
 
 command_handler = keyboardHandler(renderer, shooter)
@@ -66,8 +62,8 @@ while player_socket_connection:
       command_handler.handleKeyPress(keys)
       player_healthbar.display()
       game_state.update()
-      easy_tank.update()
-      medium_tank.update()
+    #  easy_tank.update()
+   #   medium_tank.update()
       shooter.update()
 
     elif game_state.renderer.state == 'LOGIN':

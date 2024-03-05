@@ -1,14 +1,15 @@
 from tankFactory import tankFactory 
 
 class levelGenerator():
-    def __init__(self, map):
+    def __init__(self, map, player):
         self.level = 1
-        self.enemy_tank_factory = tankFactory()
-        self.enemy_tanks = []
+        self.player = player
         self.map = map
+        self.enemy_tank_factory = tankFactory(self.map, self.player)
+        self.enemy_tanks = []
         self.rendering = False
         # creating enemy tank factory on constructor... 
-        self.enemy_tank_factory.create_enemy_tanks(self.level)
+        self.enemy_tank_factory.create_enemy_tanks()
 
 
     # class tank(enemy, entity):
@@ -18,7 +19,7 @@ class levelGenerator():
         self.level += 1
         self.render_level_up()
         self.rendering = False
-        self.enemy_tank_factory.create_enemy_tanks(self.level)
+        self.enemy_tank_factory.create_enemy_tanks()
     
     def render_level_up(self):
         self.rendering = True
