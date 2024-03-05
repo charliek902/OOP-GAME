@@ -4,8 +4,8 @@ import pygame
 import math
 
 
-#TODO 
-# need to be able to turn left and right and move in that direction using the keys 
+#TODO
+# find natural position of the gun on the player depending on the top left and the angle of the player
 
 class player(entity):
     def __init__(self, state, position_x, position_y, speed, angle, rotation_speed, points):
@@ -26,80 +26,101 @@ class player(entity):
         self.reloading = False
 
         self.screen = pygame.display.set_mode((800, 400))
-        self.speed = speed
+        self.speed = 3
         self.angle = angle
         self.rotation_speed = rotation_speed
 
     def check_health(self):
+
         if self.health <= 0:
+            print('fuck off')
+            '''
             self.state = 'DEATH'
             if self.state == 'DEATH':
                 pygame.quit()
                 exit()
+            '''
+
 
     def get_position(self):
         return self.position_x, self.position_y
+
+    def get_angle(self):
+        return self.angle
+    
     
     def move_down(self):
-        self.shooter_rec = self.image.get_rect(topleft = (self.position_x, self.position_y))
-        self.shooter_rec.x += self.speed * math.sin(math.radians(self.angle -90))
-        self.shooter_rec.y += self.speed * math.cos(math.radians(self.angle -90))
-        self.position_x = self.shooter_rec.x
-        self.position_y = self.shooter_rec.y
+        self.turn(-90)
+        self.move_player()
 
 
     def move_up(self):
-        self.shooter_rec = self.image.get_rect(topleft = (self.position_x, self.position_y))
-        if self.position_y < 0 and self.angle == 0:
-            self.move_down()
+        self.turn(-270)
+        self.move_player()
+    
+    def move_right(self):
+        self.turn(0)
+        self.move_player()
+
+    def move_left(self):
+        self.turn(-180)
+        self.move_player()
+
+
+    def moveDiagonalUpRight(self):
+        self.turn(45)
+        self.move_player()
+
+    def moveDiagonalUpLeft(self):
+        self.turn(-225)
+        self.move_player()
+
+
+    def moveDiagonalDownLeft(self):
+        self.turn(-135)
+        self.move_player(True)
+
+
+    def moveDiagonalDownRight(self):
+        self.turn(-45)
+        self.move_player(True)
+ 
+    
+    def move_player(self, increaseSpeed=False):
+        # this was built in due to noticeable differences in speeds between diagonals
+        if increaseSpeed:
+            self.shooter_rec.x -= (self.speed + 1) * math.sin(math.radians(self.angle - 90))
+            self.shooter_rec.y -= (self.speed + 1) * math.cos(math.radians(self.angle - 90))
+            self.position_x = self.shooter_rec.x
+            self.position_y = self.shooter_rec.y
         else:
-            self.shooter_rec.x -= self.speed * math.sin(math.radians(self.angle -90))
-            self.shooter_rec.y -= self.speed * math.cos(math.radians(self.angle -90))
+            self.shooter_rec.x -= self.speed * math.sin(math.radians(self.angle - 90))
+            self.shooter_rec.y -= self.speed * math.cos(math.radians(self.angle - 90))
             self.position_x = self.shooter_rec.x
             self.position_y = self.shooter_rec.y
 
 
  # need to transform the image to a better resolution.... 
-    def turn_left(self):
-        prev_center = self.shooter_rec.center
+    def turn(self, angle):
         self.image = pygame.image.load('game_images/shooter.png').convert()
         self.image = pygame.transform.scale(self.image, self.DEFAULT_IMAGE_SIZE)
-        self.image = pygame.transform.rotate(self.image, self.angle + self.rotation_speed)
+        self.image = pygame.transform.rotate(self.image, angle)
         self.rect = self.image.get_rect()
-        self.rect.center = prev_center
-        self.angle += self.rotation_speed
-
-
-    
-    def turn_right(self):
-        prev_center = self.shooter_rec.center
-        self.image = pygame.image.load('game_images/shooter.png').convert()
-        self.image = pygame.transform.scale(self.image, self.DEFAULT_IMAGE_SIZE)
-        self.image = pygame.transform.rotate(self.image, self.angle - self.rotation_speed)
-        self.rect = self.image.get_rect()
-        self.rect.center = prev_center
-        self.angle -= self.rotation_speed
-    
-
-    def move_Left_UP_diagonal(self):
-        self.angle = -45
-        prev_center = self.shooter_rec.center
-       # self.image = pygame.transform.scale(self.image, self.DEFAULT_IMAGE_SIZE)
-        self.image = pygame.image.load('game_images/shooter.png').convert()
-        image_clean = self.image
-        self.image = pygame.transform.rotate(image_clean, self.angle)
-        self.rect = self.image.get_rect()
-        self.rect.center = prev_center
-    
+        self.angle = angle
+        
+        
     def get_health(self):
         return self.health
 
     def update(self):
         self.check_health()
+        # could update player point score here... 
         self.screen.blit(self.image, self.shooter_rec)
 
 
     def fire(self):
+        print(self.angle)
+        print('fire')
         print('fires!')
         
     def reload():

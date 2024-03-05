@@ -12,21 +12,14 @@ from tank import tank
 
 # state, position_x, position_y, health, player
 
-
 player_socket_connection = True
 pygame.init()
 #LOGIN MENU gets rendered below...
 renderer = Renderer()
 
 
-
-
-
-
-
-
 game_state = game(renderer, 'active', 800, 400, renderer.screen)
-shooter = player('alive', 170, 80, 5, 10, 5, 0)
+shooter = player('alive', 170, 80, 5, 0, 5, 0)
 # level generator will create the enemies 
 
 easy_tank = tank('alive', 150, 150, 100, shooter)
@@ -50,11 +43,6 @@ gravity = 0
 
 #renderer.set_state('PLAY')
 
-
-
-
-
-
 while player_socket_connection: 
     # draw all our elements 
     # update everything 
@@ -64,23 +52,14 @@ while player_socket_connection:
         keys = pygame.key.get_pressed()
         command_handler.handleEvent(event)
         
-
-
         
     if game_state.renderer.state == 'PLAY':
       command_handler.handleKeyPress(keys)
       player_healthbar.display()
-      if game_state.renderer.state == 'PAUSE':
-        game_state.renderer.handlePause()
-      elif game_state.renderer.state == 'HOME':
-        game_state.renderer.handleHomeScreen()
-      elif game_state.renderer.state == 'QUIT':
-        game_state.renderer.handleQuit()
-      else:
-        game_state.update()
-        easy_tank.update()
-        medium_tank.update()
-        shooter.update()
+      game_state.update()
+      easy_tank.update()
+      medium_tank.update()
+      shooter.update()
 
     elif game_state.renderer.state == 'LOGIN':
       game_state.renderer.handleLogin()
@@ -89,19 +68,12 @@ while player_socket_connection:
     elif game_state.renderer.state == 'USER SCORES':
       game_state.renderer.handleUserScores()
       
-       
-       
-
-
-       
-      
 
     clock = pygame.time.Clock()
     FPS = 60  # Set your desired frames per second
     clock.tick(FPS)
 
     pygame.display.update()
-
 
 """
         if self.state == 'LOGIN':

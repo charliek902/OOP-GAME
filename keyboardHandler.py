@@ -21,24 +21,40 @@ class keyboardHandler():
             if event.unicode == 'p':
                 self.renderer.handlePause()
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_UP:
+            if event.key == pygame.K_UP and event.key == pygame.K_LEFT:
+                self.player.moveDiagonalUpLeft()
+            elif event.key == pygame.K_UP and event.key == pygame.K_RIGHT:
+                self.player.moveDiagonalUpRight()
+            elif event.key == pygame.K_DOWN and event.key == pygame.K_LEFT:
+                self.player.moveDiagonalDownLeft()
+            elif event.key == pygame.K_DOWN and event.key == pygame.K_RIGHT:
+                    self.player.moveDiagonalDownRight()
+            elif event.key == pygame.K_UP:
                 self.player.move_up()
-            if event.key == pygame.K_DOWN:
+            elif event.key == pygame.K_DOWN:
                 self.player.move_down()
-            if event.key == pygame.K_LEFT:
-                self.player.turn_left()
-            if event.key == pygame.K_RIGHT:
-                self.player.turn_right()
+            elif event.key == pygame.K_LEFT:
+                self.player.move_left()
+            elif event.key == pygame.K_RIGHT:
+                self.player.move_right()
     
     def handleKeyPress(self, keys):
-        if keys[pygame.K_UP]:
+        if keys[pygame.K_UP] and keys[pygame.K_RIGHT]:
+            self.player.moveDiagonalUpRight()
+        elif keys[pygame.K_UP] and keys[pygame.K_LEFT]:
+            self.player.moveDiagonalUpLeft()
+        if keys[pygame.K_DOWN] and keys[pygame.K_RIGHT]:
+            self.player.moveDiagonalDownRight()
+        elif keys[pygame.K_DOWN] and keys[pygame.K_LEFT]:
+            self.player.moveDiagonalDownLeft()
+        elif keys[pygame.K_UP]:
             self.player.move_up()
         elif keys[pygame.K_DOWN]:
             self.player.move_down()
         elif keys[pygame.K_LEFT]:
-            self.player.turn_left()
+            self.player.move_left()
         elif keys[pygame.K_RIGHT]:
-            self.player.turn_right()
+            self.player.move_right()
                 
        #### if keys[pygame.K_LEFT]:
          ###   self.player.turn_left()
