@@ -8,7 +8,6 @@ class keyboardHandler():
         self.player = player
     def handleEvent(self, event):
         if event.type == pygame.QUIT:
-            print('game quits!')
             pygame.quit()
             exit()
         if event.type == pygame.KEYDOWN:
@@ -55,6 +54,8 @@ class keyboardHandler():
             self.player.move_left()
         elif keys[pygame.K_RIGHT]:
             self.player.move_right()
+        if keys[pygame.K_SPACE]:
+            self.player.fire()
                 
 
 

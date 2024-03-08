@@ -1,5 +1,6 @@
 from entity import entity
 from health import health
+from bullet import bullet
 import pygame
 import math
 
@@ -12,6 +13,7 @@ class player(entity):
         pygame.sprite.Sprite.__init__(self)
         self.position_x = position_x
         self.position_y = position_y
+        self.bullets = []
         self.DEFAULT_IMAGE_SIZE = (25, 25)
         self.image = pygame.image.load('game_images/shooter.png')
         self.image = pygame.transform.scale(self.image, self.DEFAULT_IMAGE_SIZE)
@@ -21,8 +23,6 @@ class player(entity):
         self.health = player_health.get_health()
         self.points = points
         self.map = map
-
-        self.bullets = 10
         self.reloading = False
 
         self.screen = pygame.display.set_mode((800, 400))
@@ -33,13 +33,11 @@ class player(entity):
     def check_health(self):
 
         if self.health <= 0:
-            print('fuck off')
-            '''
             self.state = 'DEATH'
             if self.state == 'DEATH':
                 pygame.quit()
                 exit()
-            '''
+
 
 
     def get_position(self):
@@ -120,12 +118,24 @@ class player(entity):
         self.check_health()
         # could update player point score here... 
         self.screen.blit(self.image, self.shooter_rec)
-
+    
+    def update_player_bullets(self):
+        print(self.bullets)
+        for bullet_instance in self.bullets:
+            if isinstance(bullet_instance, bullet):
+                bullet_instance.update()
 
     def fire(self):
-        print(self.angle)
-        print('fire')
-        print('fires!')
+        print('test!')
+        firing_position = self.get_firing_position()
+        if firing_position:
+            bullet_created = bullet('alive', firing_position[0], firing_position[1], 100, 'BULLET', self.angle)
+            self.bullets.append(bullet_created)
+            print(firing_position)
+            print(self.position_x, self.position_y)
+            print('fires!')
+        else:
+            print('unsuccesful!')
 
     def check_can_move(self):
         possible_x_position = self.shooter_rec.x - self.speed * math.sin(math.radians(self.angle - 90))
@@ -134,8 +144,16 @@ class player(entity):
         # need to check map_entities if their radius intersects with the player...
 
 
+# we need to get the firing position and this is based off the angle 
+    def get_firing_position(self): 
+        firing_position = 0, 0
+        if self.angle == 0:
+            firing_position = self.position_x + self.DEFAULT_IMAGE_SIZE[0], self.position_y + 0.8 * (self.DEFAULT_IMAGE_SIZE[1])
+            # now we need to create a bullet 
+            return firing_position
+        return None
 
-        
+
     def reload():
         print('reloading')
             # would need to initialize a counter and keep it running for the reload 

@@ -53,6 +53,7 @@ while player_socket_connection:
       player_healthbar.display()
       game_state.update()
       shooter.update()
+      shooter.update_player_bullets()
       game_level_generator.update()
 
 
