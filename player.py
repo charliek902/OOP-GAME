@@ -166,7 +166,7 @@ class player(entity):
             firing_position = self.position_x - self.DEFAULT_IMAGE_SIZE[0] * 0.8, self.position_y + (self.DEFAULT_IMAGE_SIZE[1] * 0.1)
             return firing_position
         elif self.angle == -225:
-                firing_position = self.position_x + self.DEFAULT_IMAGE_SIZE[0] * 0.1, self.position_y - (self.DEFAULT_IMAGE_SIZE[1] * 0.5)
+                firing_position = self.position_x - self.DEFAULT_IMAGE_SIZE[0] * 0.1, self.position_y - (self.DEFAULT_IMAGE_SIZE[1] * 0.6)
                 return firing_position
         elif self.angle == -270:
             firing_position = self.position_x + (self.DEFAULT_IMAGE_SIZE[0] * 0.6), self.position_y - (self.DEFAULT_IMAGE_SIZE[1] * 0.8)
@@ -178,10 +178,6 @@ class player(entity):
             return None
     
     def check_valid_player_bounds(self):
-        print('associated values below:')
-        print(self.position_y)
-        print(self.angle)
-        
         if self.position_y <= 0 and (self.angle == -225 or self.angle == 45 or self.angle == -270):
             return False
         elif self.position_x <= 0 and (self.angle == -135 or self.angle == -225 or self.angle == -180):
