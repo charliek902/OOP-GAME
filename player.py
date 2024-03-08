@@ -38,8 +38,6 @@ class player(entity):
                 pygame.quit()
                 exit()
 
-
-
     def get_position(self):
         return self.position_x, self.position_y
 
@@ -120,19 +118,17 @@ class player(entity):
         self.screen.blit(self.image, self.shooter_rec)
     
     def update_player_bullets(self):
-        print(self.bullets)
         for bullet_instance in self.bullets:
             if isinstance(bullet_instance, bullet):
                 bullet_instance.update()
 
     def fire(self):
-        print('test!')
         firing_position = self.get_firing_position()
+        print(firing_position)
+
         if firing_position:
-            bullet_created = bullet('alive', firing_position[0], firing_position[1], 100, 'BULLET', self.angle)
+            bullet_created = bullet('alive', firing_position[0], firing_position[1], 100, 'BULLET', self.angle, self.map)
             self.bullets.append(bullet_created)
-            print(firing_position)
-            print(self.position_x, self.position_y)
             print('fires!')
         else:
             print('unsuccesful!')
@@ -149,8 +145,18 @@ class player(entity):
         firing_position = 0, 0
         if self.angle == 0:
             firing_position = self.position_x + self.DEFAULT_IMAGE_SIZE[0], self.position_y + 0.8 * (self.DEFAULT_IMAGE_SIZE[1])
-            # now we need to create a bullet 
             return firing_position
+        elif self.angle == -90:
+            firing_position = self.position_x + 0.2 * self.DEFAULT_IMAGE_SIZE[0], self.position_y + (self.DEFAULT_IMAGE_SIZE[1])
+            return firing_position
+        elif self.angle == -180:
+            firing_position = self.position_x - self.DEFAULT_IMAGE_SIZE[0] * 0.8, self.position_y + (self.DEFAULT_IMAGE_SIZE[1] * 0.2)
+            return firing_position
+        
+        elif self.angle == -270:
+            firing_position = self.position_x + (self.DEFAULT_IMAGE_SIZE[0] * 0.7), self.position_y - (self.DEFAULT_IMAGE_SIZE[1] * 0.8)
+            return firing_position
+        
         return None
 
 

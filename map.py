@@ -36,6 +36,9 @@ class map():
             self.entity_hash_names.remove(entity.name)
     
     def convert_entity_map_to_array(self):
+        print(self.entity_map)
+
+
         self.entities = list(self.entity_map)
 
     def update_entity_location(self, object_name, x_position, y_position):
@@ -68,8 +71,6 @@ class map():
         self.convert_entity_map_to_array()
         return self.entities
 
-
-    
     def retrieve_entities(self, object):
         lower_x_bound = object.x_position - 50
         upper_x_bound = object.x_position + 50
