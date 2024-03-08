@@ -43,43 +43,50 @@ class player(entity):
     def get_angle(self):
         return self.angle
     
-    
     def move_down(self):
         self.turn(-90)
-        self.move_player()
+        if self.check_valid_player_bounds():
+            self.move_player()
 
 
     def move_up(self):
         self.turn(-270)
         self.check_can_move()
-        self.move_player()
+        if self.check_valid_player_bounds():
+            self.move_player()
     
     def move_right(self):
         self.turn(0)
-        self.move_player()
+        if self.check_valid_player_bounds():
+            self.move_player()
 
     def move_left(self):
         self.turn(-180)
-        self.move_player()
+        if self.check_valid_player_bounds():
+            self.move_player()
 
 
     def moveDiagonalUpRight(self):
         self.turn(45)
-        self.move_player(True)
+        if self.check_valid_player_bounds():
+            self.move_player(True)
 
     def moveDiagonalUpLeft(self):
         self.turn(-225)
-        self.move_player(True)
+        if self.check_valid_player_bounds():
+            self.move_player(True)
 
 
     def moveDiagonalDownLeft(self):
         self.turn(-135)
-        self.move_player(True)
+        if self.check_valid_player_bounds():
+            self.move_player(True)
 
 
     def moveDiagonalDownRight(self):
         self.turn(-45)
-        self.move_player(True)
+        if self.check_valid_player_bounds():
+            self.move_player(True)
  
     
     def move_player(self, increaseSpeed=False):
@@ -169,6 +176,21 @@ class player(entity):
             return firing_position
         else:
             return None
+    
+    def check_valid_player_bounds(self):
+        print('associated values below:')
+        print(self.position_y)
+        print(self.angle)
+        
+        if self.position_y <= 0 and (self.angle == -225 or self.angle == 45 or self.angle == -270):
+            return False
+        elif self.position_x <= 0 and (self.angle == -135 or self.angle == -225 or self.angle == -180):
+            return False
+        elif self.position_y >= 375 and (self.angle == -135 or self.angle == -45 or self.angle == -90):
+            return False
+        elif self.position_x >= 775 and (self.angle == -45 or self.angle == 45 or self.angle == 0):
+            return False
+        return True
         
         
     def reload():
