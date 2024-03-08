@@ -11,7 +11,7 @@ class bullet(entity):
             self.angle = angle
             self.screen = pygame.display.set_mode((800, 400))
             self.DEFAULT_IMAGE_SIZE = (25, 10)
-            self.speed = 5
+            self.speed = 10
             self.image = pygame.image.load('game_images/bullet.png')
             self.image = pygame.transform.scale(self.image, self.DEFAULT_IMAGE_SIZE)
             self.image = self.rotate(self.angle)
@@ -34,8 +34,6 @@ class bullet(entity):
             self.position_x = self.bullet_rec.x
             self.position_y = self.bullet_rec.y
             self.check_collision_with_entities()
-
-
             self.screen.blit(self.image, self.bullet_rec)
 
 

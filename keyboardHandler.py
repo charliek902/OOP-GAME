@@ -42,7 +42,7 @@ class keyboardHandler():
             self.player.moveDiagonalUpRight()
         elif keys[pygame.K_UP] and keys[pygame.K_LEFT]:
             self.player.moveDiagonalUpLeft()
-        if keys[pygame.K_DOWN] and keys[pygame.K_RIGHT]:
+        elif keys[pygame.K_DOWN] and keys[pygame.K_RIGHT]:
             self.player.moveDiagonalDownRight()
         elif keys[pygame.K_DOWN] and keys[pygame.K_LEFT]:
             self.player.moveDiagonalDownLeft()
@@ -54,6 +54,7 @@ class keyboardHandler():
             self.player.move_left()
         elif keys[pygame.K_RIGHT]:
             self.player.move_right()
+       
         if keys[pygame.K_SPACE]:
             self.player.fire()
                 

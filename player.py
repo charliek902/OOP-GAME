@@ -10,7 +10,6 @@ import math
 
 class player(entity):
     def __init__(self, state, position_x, position_y, speed, angle, rotation_speed, points, map):
-        pygame.sprite.Sprite.__init__(self)
         self.position_x = position_x
         self.position_y = position_y
         self.bullets = []
@@ -24,11 +23,11 @@ class player(entity):
         self.points = points
         self.map = map
         self.reloading = False
-
         self.screen = pygame.display.set_mode((800, 400))
         self.speed = 3
         self.angle = angle
         self.rotation_speed = rotation_speed
+        self.counter = 0
 
     def check_health(self):
 
@@ -66,11 +65,11 @@ class player(entity):
 
     def moveDiagonalUpRight(self):
         self.turn(45)
-        self.move_player()
+        self.move_player(True)
 
     def moveDiagonalUpLeft(self):
         self.turn(-225)
-        self.move_player()
+        self.move_player(True)
 
 
     def moveDiagonalDownLeft(self):
@@ -114,6 +113,10 @@ class player(entity):
 
     def update(self):
         self.check_health()
+        # this counter for the update ensures that the user cannot continiously fire
+        if self.counter > 0:
+            self.counter -= 1
+
         # could update player point score here... 
         self.screen.blit(self.image, self.shooter_rec)
     
@@ -123,15 +126,12 @@ class player(entity):
                 bullet_instance.update()
 
     def fire(self):
-        firing_position = self.get_firing_position()
-        print(firing_position)
-
-        if firing_position:
+        if self.counter == 0:
+            firing_position = self.get_firing_position()
             bullet_created = bullet('alive', firing_position[0], firing_position[1], 100, 'BULLET', self.angle, self.map)
             self.bullets.append(bullet_created)
-            print('fires!')
-        else:
-            print('unsuccesful!')
+            self.counter = 15
+
 
     def check_can_move(self):
         possible_x_position = self.shooter_rec.x - self.speed * math.sin(math.radians(self.angle - 90))
@@ -144,22 +144,33 @@ class player(entity):
     def get_firing_position(self): 
         firing_position = 0, 0
         if self.angle == 0:
-            firing_position = self.position_x + self.DEFAULT_IMAGE_SIZE[0], self.position_y + 0.8 * (self.DEFAULT_IMAGE_SIZE[1])
+            firing_position = self.position_x + self.DEFAULT_IMAGE_SIZE[0], self.position_y + 0.6 * (self.DEFAULT_IMAGE_SIZE[1])
+            return firing_position
+        elif self.angle == -45:
+            firing_position = self.position_x  + self.DEFAULT_IMAGE_SIZE[0] * 0.8, self.position_y + (self.DEFAULT_IMAGE_SIZE[1] * 1.2)
             return firing_position
         elif self.angle == -90:
-            firing_position = self.position_x + 0.2 * self.DEFAULT_IMAGE_SIZE[0], self.position_y + (self.DEFAULT_IMAGE_SIZE[1])
+            firing_position = self.position_x + 0.1 * self.DEFAULT_IMAGE_SIZE[0], self.position_y + (self.DEFAULT_IMAGE_SIZE[1])
+            return firing_position
+        elif self.angle == -135:
+            firing_position = self.position_x - self.DEFAULT_IMAGE_SIZE[0], self.position_y + (self.DEFAULT_IMAGE_SIZE[1])
             return firing_position
         elif self.angle == -180:
-            firing_position = self.position_x - self.DEFAULT_IMAGE_SIZE[0] * 0.8, self.position_y + (self.DEFAULT_IMAGE_SIZE[1] * 0.2)
+            firing_position = self.position_x - self.DEFAULT_IMAGE_SIZE[0] * 0.8, self.position_y + (self.DEFAULT_IMAGE_SIZE[1] * 0.1)
             return firing_position
-        
+        elif self.angle == -225:
+                firing_position = self.position_x + self.DEFAULT_IMAGE_SIZE[0] * 0.1, self.position_y - (self.DEFAULT_IMAGE_SIZE[1] * 0.5)
+                return firing_position
         elif self.angle == -270:
-            firing_position = self.position_x + (self.DEFAULT_IMAGE_SIZE[0] * 0.7), self.position_y - (self.DEFAULT_IMAGE_SIZE[1] * 0.8)
+            firing_position = self.position_x + (self.DEFAULT_IMAGE_SIZE[0] * 0.6), self.position_y - (self.DEFAULT_IMAGE_SIZE[1] * 0.8)
             return firing_position
+        elif self.angle == 45:
+            firing_position = self.position_x + (self.DEFAULT_IMAGE_SIZE[0] * 0.9), self.position_y - (self.DEFAULT_IMAGE_SIZE[1] * 0.1)
+            return firing_position
+        else:
+            return None
         
-        return None
-
-
+        
     def reload():
         print('reloading')
             # would need to initialize a counter and keep it running for the reload 
