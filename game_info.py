@@ -4,7 +4,7 @@ import pygame
 
 # we need the round and we need the remaining enemies 
 
-class point_counter(entity):
+class game_info(entity):
     def __init__(self, x, y, initial_points):
         self.x = x
         self.y = y
@@ -24,7 +24,7 @@ class point_counter(entity):
         self.screen.blit(img, (20, 20))
         img = self.font.render('Rounds completed: ' + str(rounds_completed), True, "blue")
         self.screen.blit(img, (220, 20))
-        img = self.font.render(' Rounds remaining: ' + str(remaining_enemies), True, "blue")
+        img = self.font.render(' Enemies remaining: ' + str(remaining_enemies), True, "blue")
         self.screen.blit(img, (520, 20))
 
 

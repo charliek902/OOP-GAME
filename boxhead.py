@@ -10,7 +10,7 @@ from healthbar import healthbar
 from tank import tank
 from map import map
 from levelGenerator import levelGenerator
-from point_counter import point_counter
+from game_info import game_info
 
 
 # state, position_x, position_y, health, player
@@ -39,7 +39,7 @@ map_of_game.generate_walls()
 
 # health, x_position, y_position, width, height, points, screen
 player_healthbar = healthbar(720, 20, 60 ,10, 100, game_state.test_surface, shooter)
-player_info_counter = point_counter(20, 20, 0)
+player_info_counter = game_info(20, 20, 0)
 
 
 #renderer.set_state('PLAY')
@@ -64,8 +64,6 @@ while player_socket_connection:
       map_of_game.update_walls()
       player_info_counter.update(game_state.points, game_level_generator.level, game_level_generator.remaining_enemy_tanks)
       
-      
-
 
     elif game_state.renderer.state == 'LOGIN':
       game_state.renderer.handleLogin()
