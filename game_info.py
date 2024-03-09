@@ -1,8 +1,7 @@
 from entity import entity
 import pygame
 
-
-# we need the round and we need the remaining enemies 
+# in this class the player points, the number of rounds completed and the number of remaining enemies left is rendered on the screen 
 
 class game_info(entity):
     def __init__(self, x, y, initial_points):
@@ -14,9 +13,7 @@ class game_info(entity):
         img = self.font.render('Points:' + str(self.figure) + ' Rounds completed: ' + str(0) + ' Rounds remaining: ' + str(0), True, "blue")
         self.screen.blit(img, (20, 20))
         
-        # need to draw the point cointer in a certain place... 
 
-        # walls, enemies and users should not spawn there... 
     
     def update(self, player_points, rounds_completed, remaining_enemies):
         self.figure = player_points

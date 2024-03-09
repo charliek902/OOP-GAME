@@ -28,10 +28,10 @@ class bullet(entity):
             map_entities = self.map.get_entities()
 
             for entity_name, entity_positions in map_entities.items():
-                entity_x = entity_positions[0]  # x-coordinate of the entity
-                entity_y = entity_positions[1]  # y-coordinate of the entity
-                entity_width = 25  # Assuming entity width is 25 (adjust as needed)
-                entity_height = 25  # Assuming entity height is 25 (adjust as needed)
+                entity_x = entity_positions[0]  
+                entity_y = entity_positions[1]  
+                entity_width = 25  
+                entity_height = 25  
 
                 if (entity_x <= self.position_x <= entity_x + entity_width) and \
                 (entity_y <= self.position_y <= entity_y + entity_height):
@@ -56,13 +56,3 @@ class bullet(entity):
             self.screen.blit(self.image, self.bullet_rec)
 
 
-
-
-
-
-
-
-
-
-# do need to ask the question, are the same constructors really necessary for inheriting other attributes + 
-# what is the role of super within OOP? what of interfaces? 

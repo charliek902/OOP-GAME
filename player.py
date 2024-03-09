@@ -148,9 +148,6 @@ class player(entity):
             print('below are the points count...')
             print(self.game.points)
 
-    
-
-
     def check_can_move(self):
         possible_x_position = self.shooter_rec.x - self.speed * math.sin(math.radians(self.angle - 90))
         possible_y_position = self.shooter_rec.y - self.speed * math.cos(math.radians(self.angle - 90))

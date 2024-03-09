@@ -13,46 +13,29 @@ from levelGenerator import levelGenerator
 from game_info import game_info
 
 
-# state, position_x, position_y, health, player
 
+# construction of all the necessary classes to start the game... 
 player_socket_connection = True
 pygame.init()
-#LOGIN MENU gets rendered below...
 renderer = Renderer()
-
-# we need to have a level generator --> this would create the enemy tanks 
-# (perhaps a factor class depending on the level generator)
-
 game_state = game(renderer, 'active', 800, 400, renderer.screen)
 shooter = player('alive', 170, 80, 5, 0, 5, 0, None, game_state)
-
-# level generator will create the enemies 
 map_of_game = map(shooter)
-# setting the map here... 
 shooter.set_map(map_of_game)
-
 game_level_generator = levelGenerator(map_of_game, shooter)
 command_handler = keyboardHandler(renderer, shooter)
-
 map_of_game.generate_walls()
-
-
-# health, x_position, y_position, width, height, points, screen
 player_healthbar = healthbar(720, 20, 60 ,10, 100, game_state.test_surface, shooter)
 player_info_counter = game_info(20, 20, 0)
 
 
-#renderer.set_state('PLAY')
+# main while loop for the running of the game 
 
 while player_socket_connection: 
-    # draw all our elements 
-    # update everything 
 
-    # check for all possible type of player input 
     for event in pygame.event.get():
         keys = pygame.key.get_pressed()
         command_handler.handleEvent(event)
-        
         
     if game_state.renderer.state == 'PLAY':
       command_handler.handleKeyPress(keys)
@@ -74,7 +57,7 @@ while player_socket_connection:
       
 
     clock = pygame.time.Clock()
-    FPS = 60  # Set your desired frames per second
+    FPS = 60 
     clock.tick(FPS)
 
     pygame.display.update()

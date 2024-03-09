@@ -9,7 +9,6 @@ class game():
         self.test_surface = pygame.transform.scale(self.test_surface, (800, 400)).convert_alpha()
         self.points = 0
 
-
     def play(self):
         print('plays the game!')
     

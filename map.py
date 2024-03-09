@@ -119,13 +119,5 @@ class map():
             wall.update()
 
     
-
-
-
-
-
-
-    
-    # we need to check this map for nearby entities (tanks will use this and so will the user)
     
 

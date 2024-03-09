@@ -10,12 +10,7 @@ class levelGenerator():
         self.enemy_tanks = []
         self.remaining_enemy_tanks = 0
         self.rendering = False
-        # creating enemy tank factory on constructor... 
         self.enemy_tank_factory.create_enemy_tanks()
-
-
-    # class tank(enemy, entity):
-    # def __init__(self, state, position_x, position_y, health, player, map, type):
 
     def level_up(self):
         self.level += 1
