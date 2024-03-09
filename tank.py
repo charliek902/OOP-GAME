@@ -30,12 +30,12 @@ import heapq
 
 
 class tank(enemy, entity):
-    def __init__(self, state, position_x, position_y, player, map, type):
+    def __init__(self, state, position_x, position_y, health, player, map, type):
         self.state = state
         self.entity_hash_name = hash(random.randint(0, 1000))
         self.position_x = position_x
         self.position_y = position_y
-        self.health = 100
+        self.health = health
         self.player = player
         self.screen = pygame.display.set_mode((800, 400))
         self.DEFAULT_IMAGE_SIZE = (25, 25)
@@ -95,6 +95,9 @@ class tank(enemy, entity):
 
         # I think we need to implement a strategy class here
     
+    def check_health(self):
+        if self.health <= 0:
+            self.state = 'DEAD'
 
     def followPath(self, path):
         # should turn to the coordinate on the path 
@@ -107,6 +110,7 @@ class tank(enemy, entity):
         # NB: this should be firing when at a certain distance 
 
     def update(self):
+        self.check_health()
         self.moveToPlayer()
        # self.check_collide()
         self.map.update_entity_location(self.name, self.position_x, self.position_y)

@@ -1,6 +1,8 @@
 from entity import entity
 import pygame
 import heapq
+from wall import wall
+import random
 
 # this will be a singleton mapping object for all the entities within the game
 
@@ -11,14 +13,18 @@ class map():
         self.entity_map = {}
         self.entities = []
         self.enemy_tanks = []
+        self.wall_coordinates = []
+        self.walls = []
     
     def get_entity(self, name):
-        return self.entity_map[name]
+        if name in self.entity_map:
+            return self.entity_map[name]
+        else:
+            return None  
     
     def add_entity(self, entity):
-        if entity.name:
-            self.entity_map[entity.name] = [entity]
-            self.entity_hash_names.add(entity.name)
+        self.entity_map[entity.name] = entity  # Store the entire entity object
+        self.entity_hash_names.add(entity.name)
     
     def add_enemy_tank(self, tank):
         self.enemy_tanks.append(tank)
@@ -28,7 +34,6 @@ class map():
     
     def get_enemy_tanks(self):
         return self.enemy_tanks
-
 
     def remove_entity(self, entity):
         if entity.name:
@@ -58,14 +63,15 @@ class map():
                 # need to calculate the distance between the player and the entity and also need to 
                 # calculate the trajectory of the entity and whether it will hit the tank 
                 
-
-
                 heapq.heappush(entities_to_dodge, (distance, entity))
 
         return entities_to_dodge
 
     def get_entities(self):
         return self.entity_map
+    
+    def remove_enemy_tank(self, tank):
+        self.enemy_tanks.remove(tank)
 
 
     def retrieve_entities(self, object):
@@ -77,6 +83,28 @@ class map():
          and self.entities.y_position < upper_y_bound and self.entities.y_position > lower_y_bound:
             return True
         return False
+    
+    def generate_walls(self):
+        # want to generate 8 walls for the game 
+        for i in range(0, 8):
+            x = random.randint(25, 775)
+            y = random.randint(25, 375)
+            while (x, y) in self.wall_coordinates:
+                x = random.randint(0, 400)
+                y = random.randint(0, 400)
+            self.wall_coordinates.append([x, y])
+            game_wall = wall('alive', x, y, 100, 'WALL')
+            self.walls.append(game_wall)
+    
+    def update_walls(self):
+        for wall in self.walls:
+            wall.update()
+
+    
+
+
+
+
 
 
     

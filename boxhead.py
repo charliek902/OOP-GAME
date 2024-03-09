@@ -34,6 +34,10 @@ shooter.set_map(map_of_game)
 game_level_generator = levelGenerator(map_of_game, shooter)
 command_handler = keyboardHandler(renderer, shooter)
 
+map_of_game.generate_walls()
+
+
+
 # health, x_position, y_position, width, height, points, screen
 player_healthbar = healthbar(720, 20, 60 ,10, 100, game_state.test_surface, shooter)
 
@@ -57,6 +61,8 @@ while player_socket_connection:
       shooter.update()
       shooter.update_player_bullets()
       game_level_generator.update()
+      map_of_game.update_walls()
+      
 
 
     elif game_state.renderer.state == 'LOGIN':

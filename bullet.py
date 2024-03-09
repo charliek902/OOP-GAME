@@ -24,21 +24,24 @@ class bullet(entity):
         
         def check_collision_with_entities(self):
             map_entities = self.map.get_entities()
-            for entity in map_entities:
-                print(map_entities[entity])
-                entity_x = map_entities[entity][0] + 25
-                entity_y = map_entities[entity][1] + 25
-                if (map_entities[entity][0] <= self.position_x <= entity_x) and (map_entities[entity][1] <= self.position_y <= entity_y):
 
-                    entity_damaged = self.map.get_entity(entity)
-                    entity_damaged.heath -= 10
+            for entity_name, entity_positions in map_entities.items():
+                entity_x = entity_positions[0]  # x-coordinate of the entity
+                entity_y = entity_positions[1]  # y-coordinate of the entity
+                entity_width = 25  # Assuming entity width is 25 (adjust as needed)
+                entity_height = 25  # Assuming entity height is 25 (adjust as needed)
+
+                if (entity_x <= self.position_x <= entity_x + entity_width) and \
+                (entity_y <= self.position_y <= entity_y + entity_height):
+                    entity_damaged = self.map.get_entity(entity_name)
+                    print(entity_damaged)
+
+                    # need to remove the health by 10 from the enemy tank and you also need to remove the bullet 
+                    # from the game 
 
 
-
-
-            # we want to loop through the map_entities and chek if the bullet position 
-
-            print('checks collision!')
+                   # entity_damaged.health -= 10
+  
             
         def update(self):
             self.bullet_rec.x -= self.speed * math.sin(math.radians(self.angle - 90))

@@ -1,4 +1,5 @@
 from tankFactory import tankFactory 
+from map import map 
 
 class levelGenerator():
     def __init__(self, map, player):
@@ -31,7 +32,12 @@ class levelGenerator():
         else:
             enemies = self.enemy_tank_factory.get_enemies()
             for enemy in enemies:
-                enemy.update()
+                if enemy.state != 'DEAD':
+                    enemy.update()
+                else:
+                    self.enemy_tank_factory.remove_tank(enemy)
+                    self.map.remove_enemy_tank(enemy)
+
 
 
 
