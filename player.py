@@ -10,10 +10,11 @@ import math
 # find natural position of the gun on the player depending on the top left and the angle of the player
 
 class player(entity):
-    def __init__(self, state, position_x, position_y, speed, angle, rotation_speed, points, map):
+    def __init__(self, state, position_x, position_y, speed, angle, rotation_speed, points, map, game):
         self.position_x = position_x
         self.position_y = position_y
         self.name = hash(random.randint(0, 10000))
+        self.game = game
         self.bullets = []
         self.DEFAULT_IMAGE_SIZE = (25, 25)
         self.image = pygame.image.load('game_images/shooter.png')
@@ -133,13 +134,21 @@ class player(entity):
         for bullet_instance in self.bullets:
             if isinstance(bullet_instance, bullet):
                 bullet_instance.update()
+    
+    def update_points(self):
+        return self.points
 
     def fire(self):
         if self.frames_until_player_can_fire == 0:
             firing_position = self.get_firing_position()
-            bullet_created = bullet('alive', firing_position[0], firing_position[1], 100, 'BULLET', self.angle, self.map)
+            bullet_created = bullet('alive', firing_position[0], firing_position[1], 100, 'BULLET', self.angle, self.map, self.game)
             self.bullets.append(bullet_created)
             self.frames_until_player_can_fire = 30
+
+            print('below are the points count...')
+            print(self.game.points)
+
+    
 
 
     def check_can_move(self):

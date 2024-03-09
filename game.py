@@ -7,6 +7,7 @@ class game():
         self.screen = screen
         self.test_surface = pygame.image.load('game_images/background.png')
         self.test_surface = pygame.transform.scale(self.test_surface, (800, 400)).convert_alpha()
+        self.points = 0
 
 
     def play(self):

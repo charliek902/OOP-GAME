@@ -23,19 +23,17 @@ renderer = Renderer()
 # (perhaps a factor class depending on the level generator)
 
 game_state = game(renderer, 'active', 800, 400, renderer.screen)
-shooter = player('alive', 170, 80, 5, 0, 5, 0, None)
+shooter = player('alive', 170, 80, 5, 0, 5, 0, None, game_state)
 
 # level generator will create the enemies 
 map_of_game = map(shooter)
 # setting the map here... 
 shooter.set_map(map_of_game)
 
-
 game_level_generator = levelGenerator(map_of_game, shooter)
 command_handler = keyboardHandler(renderer, shooter)
 
 map_of_game.generate_walls()
-
 
 
 # health, x_position, y_position, width, height, points, screen

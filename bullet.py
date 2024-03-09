@@ -2,10 +2,12 @@ from entity import entity
 import pygame
 import math
 class bullet(entity):
-        def __init__(self, state, position_x, position_y, health, type, angle, map):
+        def __init__(self, state, position_x, position_y, health, type, angle, map, game):
             self.state = state
             self.position_x = position_x 
             self.position_y = position_y 
+            self.game = game
+            self.points = game.points
             self.health = health
             self.type = type
             self.angle = angle
@@ -34,6 +36,7 @@ class bullet(entity):
                 if (entity_x <= self.position_x <= entity_x + entity_width) and \
                 (entity_y <= self.position_y <= entity_y + entity_height):
                     entity_damaged = self.map.get_entity(entity_name)
+                    self.points += 10
                     print(entity_damaged)
 
                     # need to remove the health by 10 from the enemy tank and you also need to remove the bullet 
@@ -49,6 +52,7 @@ class bullet(entity):
             self.position_x = self.bullet_rec.x
             self.position_y = self.bullet_rec.y
             self.check_collision_with_entities()
+            self.game.points = self.points
             self.screen.blit(self.image, self.bullet_rec)
 
 
