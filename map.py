@@ -84,14 +84,32 @@ class map():
             return True
         return False
     
+    # basically just need to increase x by 25 and y by 25 
+    def get_wall_locations(self):
+        return self.wall_coordinates
+
+    
+    # want to generate 8 walls for the game
     def generate_walls(self):
-        # want to generate 8 walls for the game 
+        # this boolean will be set to true if another wall is within the random coordinates range of 25 
+        in_range = True
+        repeat = False
         for i in range(0, 8):
             x = random.randint(25, 775)
             y = random.randint(25, 375)
-            while (x, y) in self.wall_coordinates:
+            while (x, y) in self.wall_coordinates or in_range:
                 x = random.randint(0, 400)
                 y = random.randint(0, 400)
+
+                for dx, dy in self.wall_coordinates:
+                    if (x <= dx + 25 or x >= dx - 25) and (y <= dy + 25 or y >= dy - 25):
+                        in_range = True
+                        repeat = False
+                
+                if repeat == False:
+                    in_range = False
+
+
             self.wall_coordinates.append([x, y])
             game_wall = wall('alive', x, y, 100, 'WALL')
             self.walls.append(game_wall)

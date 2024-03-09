@@ -7,22 +7,27 @@ import pygame
 class healthbar(entity):
     def __init__(self, x_position, y_position, width, height, points, screen, player):
 
-        self.position_x = x_position
-        self.position_y = y_position
         self.width = width
         self.height = height
         self.points = points
         self.screen = screen
         self.player = player
+        self.screen = pygame.display.set_mode((800, 400))
+        self.type = None
+
 
     def display(self):
-        print(self.player)
-        self.ratio = self.player.get_health() / self.points
-        pygame.draw.rect(self.screen, "red", (self.position_x, self.position_y, self.width, self.height))
-        pygame.draw.rect(self.screen, "green", (self.position_x, self.position_y, self.width * self.ratio, self.height))
+        self.ratio = self.player.health / self.points
+        pygame.draw.rect(self.screen, "red", (self.player.position_x - 15, self.player.position_y - 20, self.width, self.height))
+        pygame.draw.rect(self.screen, "green", (self.player.position_x - 15, self.player.position_y - 20, self.width * self.ratio, self.height))
+        pygame.display.flip() 
+        
 
     def update(self):
         self.display()
+    
+
+
 
         
         

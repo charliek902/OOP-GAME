@@ -48,6 +48,7 @@ class tank(enemy, entity):
         # the initial angle of the tank is facing downwards... 
         self.angle = 180
         self.type = type
+        self.healthbar = None
     
 
     def interpret_state(self):
@@ -115,8 +116,15 @@ class tank(enemy, entity):
        # self.check_collide()
         self.map.update_entity_location(self.name, self.position_x, self.position_y)
         self.screen.blit(self.image, self.tank_rec)
+
     
     def dodge_entity(self, entities):
         closest_entity = heapq.heappop(entities)
         
         # need to dodge the closest entity 
+    
+    def add_enemy_healthbar(self, healthbar):
+        self.healthbar = healthbar
+    
+
+
