@@ -8,6 +8,7 @@ class levelGenerator():
         self.map = map
         self.enemy_tank_factory = tankFactory(self.map, self.player)
         self.enemy_tanks = []
+        self.remaining_enemy_tanks = 0
         self.rendering = False
         # creating enemy tank factory on constructor... 
         self.enemy_tank_factory.create_enemy_tanks()
@@ -31,6 +32,7 @@ class levelGenerator():
             self.level_up()
         else:
             enemies = self.enemy_tank_factory.get_enemies()
+            self.remaining_enemy_tanks = len(enemies)
             for enemy in enemies:
                 if enemy.state != 'DEAD':
                     enemy.update()

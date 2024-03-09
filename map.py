@@ -95,11 +95,11 @@ class map():
         in_range = True
         repeat = False
         for i in range(0, 8):
-            x = random.randint(25, 775)
-            y = random.randint(25, 375)
+            x = random.randint(100, 775)
+            y = random.randint(50, 375)
             while (x, y) in self.wall_coordinates or in_range:
-                x = random.randint(0, 400)
-                y = random.randint(0, 400)
+                x = random.randint(50, 400)
+                y = random.randint(50, 400)
 
                 for dx, dy in self.wall_coordinates:
                     if (x <= dx + 25 or x >= dx - 25) and (y <= dy + 25 or y >= dy - 25):
