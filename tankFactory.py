@@ -20,7 +20,7 @@ class tankFactory():
         # need to put enemy tanks in different locations... (really important now)
             
         for i in range(0, self.enemies + 1):
-            enemy_tank = tank('SEARCH', 150, 150, 100, self.player, self.map, 'TANK')
+            enemy_tank = tank('SEARCH', 150, 150, self.player, self.map, 'TANK')
             self.map.add_entity(enemy_tank)
             self.map.add_enemy_tank(enemy_tank)
             self.enemies_list.append(enemy_tank)

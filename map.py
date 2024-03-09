@@ -17,7 +17,7 @@ class map():
     
     def add_entity(self, entity):
         if entity.name:
-            self.entity_map[entity.name] = [entity.position_x, entity.position_y]
+            self.entity_map[entity.name] = [entity]
             self.entity_hash_names.add(entity.name)
     
     def add_enemy_tank(self, tank):
@@ -36,9 +36,6 @@ class map():
             self.entity_hash_names.remove(entity.name)
     
     def convert_entity_map_to_array(self):
-        print(self.entity_map)
-
-
         self.entities = list(self.entity_map)
 
     def update_entity_location(self, object_name, x_position, y_position):
@@ -68,8 +65,8 @@ class map():
         return entities_to_dodge
 
     def get_entities(self):
-        self.convert_entity_map_to_array()
-        return self.entities
+        return self.entity_map
+
 
     def retrieve_entities(self, object):
         lower_x_bound = object.x_position - 50

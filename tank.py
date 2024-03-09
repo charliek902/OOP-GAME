@@ -30,12 +30,12 @@ import heapq
 
 
 class tank(enemy, entity):
-    def __init__(self, state, position_x, position_y, health, player, map, type):
+    def __init__(self, state, position_x, position_y, player, map, type):
         self.state = state
         self.entity_hash_name = hash(random.randint(0, 1000))
         self.position_x = position_x
         self.position_y = position_y
-        self.health = health
+        self.health = 100
         self.player = player
         self.screen = pygame.display.set_mode((800, 400))
         self.DEFAULT_IMAGE_SIZE = (25, 25)

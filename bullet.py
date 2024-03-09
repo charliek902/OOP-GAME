@@ -24,7 +24,19 @@ class bullet(entity):
         
         def check_collision_with_entities(self):
             map_entities = self.map.get_entities()
-            print(map_entities)
+            for entity in map_entities:
+                print(map_entities[entity])
+                entity_x = map_entities[entity][0] + 25
+                entity_y = map_entities[entity][1] + 25
+                if (map_entities[entity][0] <= self.position_x <= entity_x) and (map_entities[entity][1] <= self.position_y <= entity_y):
+
+                    entity_damaged = self.map.get_entity(entity)
+                    entity_damaged.heath -= 10
+
+
+
+
+            # we want to loop through the map_entities and chek if the bullet position 
 
             print('checks collision!')
             

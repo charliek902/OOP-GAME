@@ -2,6 +2,7 @@ from entity import entity
 from health import health
 from bullet import bullet
 import pygame
+import random
 import math
 
 
@@ -12,6 +13,7 @@ class player(entity):
     def __init__(self, state, position_x, position_y, speed, angle, rotation_speed, points, map):
         self.position_x = position_x
         self.position_y = position_y
+        self.name = hash(random.randint(0, 10000))
         self.bullets = []
         self.DEFAULT_IMAGE_SIZE = (25, 25)
         self.image = pygame.image.load('game_images/shooter.png')
@@ -27,7 +29,7 @@ class player(entity):
         self.speed = 3
         self.angle = angle
         self.rotation_speed = rotation_speed
-        self.counter = 0
+        self.frames_until_player_can_fire = 0
 
     def check_health(self):
 
@@ -120,9 +122,9 @@ class player(entity):
 
     def update(self):
         self.check_health()
-        # this counter for the update ensures that the user cannot continiously fire
-        if self.counter > 0:
-            self.counter -= 1
+        # this frames_until_player_can_fire for the update ensures that the user cannot continiously fire
+        if self.frames_until_player_can_fire > 0:
+            self.frames_until_player_can_fire -= 1
 
         # could update player point score here... 
         self.screen.blit(self.image, self.shooter_rec)
@@ -133,11 +135,11 @@ class player(entity):
                 bullet_instance.update()
 
     def fire(self):
-        if self.counter == 0:
+        if self.frames_until_player_can_fire == 0:
             firing_position = self.get_firing_position()
             bullet_created = bullet('alive', firing_position[0], firing_position[1], 100, 'BULLET', self.angle, self.map)
             self.bullets.append(bullet_created)
-            self.counter = 30
+            self.frames_until_player_can_fire = 30
 
 
     def check_can_move(self):

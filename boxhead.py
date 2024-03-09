@@ -29,6 +29,8 @@ shooter = player('alive', 170, 80, 5, 0, 5, 0, None)
 map_of_game = map(shooter)
 # setting the map here... 
 shooter.set_map(map_of_game)
+
+
 game_level_generator = levelGenerator(map_of_game, shooter)
 command_handler = keyboardHandler(renderer, shooter)
 
