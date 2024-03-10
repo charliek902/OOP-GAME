@@ -19,7 +19,7 @@ class game_info(entity):
         self.figure = player_points
         img = self.font.render('Points: ' + str(self.figure), True, "blue")
         self.screen.blit(img, (20, 20))
-        img = self.font.render('Rounds completed: ' + str(rounds_completed), True, "blue")
+        img = self.font.render('Rounds completed: ' + str(rounds_completed - 1), True, "blue")
         self.screen.blit(img, (220, 20))
         img = self.font.render(' Enemies remaining: ' + str(remaining_enemies), True, "blue")
         self.screen.blit(img, (520, 20))

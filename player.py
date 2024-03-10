@@ -131,8 +131,11 @@ class player(entity):
     
     def update_player_bullets(self):
         for bullet_instance in self.bullets:
-            if isinstance(bullet_instance, bullet):
+            if isinstance(bullet_instance, bullet) and bullet_instance.state != 'DEAD':
                 bullet_instance.update()
+            else:
+                print('goes here Charlie!')
+                self.bullets.remove(bullet_instance)
     
     def update_points(self):
         return self.points

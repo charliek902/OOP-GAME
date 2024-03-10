@@ -9,7 +9,8 @@ class tankFactory():
         self.level = 1
         self.enemies = 0
         self.health = 20
-        self.maximum_tanks = 33
+        # 16 will be the maximum amount of enemy tanks that will face the user in a single round... 
+        self.maximum_tanks = 17
         self.map = map
         self.player = player
         self.enemies_list = []
