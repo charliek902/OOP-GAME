@@ -45,7 +45,7 @@ while player_socket_connection:
       shooter.update_player_bullets()
       game_level_generator.update()
       map_of_game.update_walls()
-      player_info_counter.update(game_state.points, game_level_generator.level, game_level_generator.remaining_enemy_tanks)
+      player_info_counter.update(game_state.points, game_level_generator.level - 1, game_level_generator.remaining_enemy_tanks)
       
 
     elif game_state.renderer.state == 'LOGIN':

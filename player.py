@@ -159,6 +159,9 @@ class player(entity):
             if self.angle == 0 or self.angle == -270:
                 if (dx - 25 <= possible_x_position <= dx + 40) and (dy - 25 <= possible_y_position <= dy + 40):
                     return False
+            if self.angle == -90:
+                if (dx - 25 <= possible_x_position <= dx + 40) and (dy - 25 <= possible_y_position <= dy + 40):
+                    return False
             elif (dx <= possible_x_position <= dx + 40) and (dy <= possible_y_position <= dy + 40):
                 return False
         return True

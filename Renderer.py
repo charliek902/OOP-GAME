@@ -78,11 +78,14 @@ class Renderer():
 
     def handlePause(self):
         if self.state != 'PAUSE':
-            print('goes here!')
             self.state = 'PAUSE'
             self.test_surface = pygame.image.load('game_images/background.png')
             self.test_surface = pygame.transform.scale(self.test_surface, (800, 400)).convert_alpha()
+            self.font = pygame.font.SysFont(None, 24)
             self.screen.blit(self.test_surface, (0,0))
+            img = self.font.render('Would you like to return back to the game?' , True, "blue")
+            self.screen.blit(img, (20, 20))
+
         else:
             self.state = 'PLAY'
     
