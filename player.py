@@ -164,6 +164,15 @@ class player(entity):
                     return False
             elif (dx <= possible_x_position <= dx + 40) and (dy <= possible_y_position <= dy + 40):
                 return False
+        
+        enemy_tank_locations = self.map.get_enemy_tanks()
+
+        print('enemy tanks below:')
+        print(enemy_tank_locations)
+            
+        # here we now need to check the positions of the enemy tanks (players should not be able to move into the enemy tanks)
+
+
         return True
 
      #   map_entities = self.map.get_entities()
