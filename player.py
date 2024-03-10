@@ -48,47 +48,46 @@ class player(entity):
     
     def move_down(self):
         self.turn(-90)
-        if self.check_valid_player_bounds():
+        if self.check_can_move() and self.check_valid_player_bounds():
             self.move_player()
 
 
     def move_up(self):
         self.turn(-270)
-        self.check_can_move()
-        if self.check_valid_player_bounds():
+        if self.check_can_move() and self.check_valid_player_bounds():
             self.move_player()
     
     def move_right(self):
         self.turn(0)
-        if self.check_valid_player_bounds():
+        if self.check_can_move() and self.check_valid_player_bounds():
             self.move_player()
 
     def move_left(self):
         self.turn(-180)
-        if self.check_valid_player_bounds():
+        if self.check_can_move() and self.check_valid_player_bounds():
             self.move_player()
 
 
     def moveDiagonalUpRight(self):
         self.turn(45)
-        if self.check_valid_player_bounds():
+        if self.check_can_move() and self.check_valid_player_bounds():
             self.move_player(True)
 
     def moveDiagonalUpLeft(self):
         self.turn(-225)
-        if self.check_valid_player_bounds():
+        if self.check_can_move() and self.check_valid_player_bounds():
             self.move_player(True)
 
 
     def moveDiagonalDownLeft(self):
         self.turn(-135)
-        if self.check_valid_player_bounds():
+        if self.check_can_move() and self.check_valid_player_bounds():
             self.move_player(True)
 
 
     def moveDiagonalDownRight(self):
         self.turn(-45)
-        if self.check_valid_player_bounds():
+        if self.check_can_move() and self.check_valid_player_bounds():
             self.move_player(True)
  
     
@@ -148,12 +147,23 @@ class player(entity):
             print('below are the points count...')
             print(self.game.points)
 
+
+# this function also needs to check the angle of the player as well, 
+
     def check_can_move(self):
         possible_x_position = self.shooter_rec.x - self.speed * math.sin(math.radians(self.angle - 90))
         possible_y_position = self.shooter_rec.y - self.speed * math.cos(math.radians(self.angle - 90))
-        map_entities = self.map.get_entities()
-        # need to check map_entities if their radius intersects with the player...
+        # checks the wall locations and whether the player can move there 
+        wall_locations = self.map.get_wall_locations()
+        for dx, dy in wall_locations:
+            if self.angle == 0 or self.angle == -270:
+                if (dx - 25 <= possible_x_position <= dx + 40) and (dy - 25 <= possible_y_position <= dy + 40):
+                    return False
+            elif (dx <= possible_x_position <= dx + 40) and (dy <= possible_y_position <= dy + 40):
+                return False
+        return True
 
+     #   map_entities = self.map.get_entities()
 
 # we need to get the firing position and this is based off the angle 
     def get_firing_position(self): 
