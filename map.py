@@ -89,30 +89,29 @@ class map():
         return self.wall_coordinates
 
     
-    # want to generate 8 walls for the game
+    # want to generate 12 walls for the game which are roughly spaced out 
     def generate_walls(self):
         # this boolean will be set to true if another wall is within the random coordinates range of 25 
-        in_range = True
-        repeat = False
-        for i in range(0, 8):
-            x = random.randint(100, 775)
-            y = random.randint(50, 375)
-            while (x, y) in self.wall_coordinates or in_range:
-                x = random.randint(50, 400)
-                y = random.randint(50, 400)
+        start_x = 0
+        end_x = 50
+        start_y = 50
+        end_y = 100
 
-                for dx, dy in self.wall_coordinates:
-                    if (x <= dx + 25 or x >= dx - 25) and (y <= dy + 25 or y >= dy - 25):
-                        in_range = True
-                        repeat = False
-                
-                if repeat == False:
-                    in_range = False
-
-
+        for i in range(0, 12):
+            x = random.randint(start_x, end_x)
+            y = random.randint(start_y, end_y)
             self.wall_coordinates.append([x, y])
             game_wall = wall('alive', x, y, 100, 'WALL')
             self.walls.append(game_wall)
+            # resets the x value back to 0 when walls have been created in the far reaches of the game 
+            if start_x > 700:
+                start_y += 100
+                end_y += 100
+                start_x = 0
+                end_x = 50
+            start_x += 200
+            end_x += 200
+
     
     def update_walls(self):
         for wall in self.walls:
