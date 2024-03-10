@@ -23,7 +23,7 @@ class map():
             return None  
     
     def add_entity(self, entity):
-        self.entity_map[entity.name] = entity  # Store the entire entity object
+        self.entity_map[entity.name] = entity  
         self.entity_hash_names.add(entity.name)
     
     def add_enemy_tank(self, tank):

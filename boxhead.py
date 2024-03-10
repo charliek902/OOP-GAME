@@ -62,29 +62,6 @@ while player_socket_connection:
 
     pygame.display.update()
 
-"""
-        if self.state == 'LOGIN':
-            self.handleLogin(self)
-        elif self.state == 'CREATE':
-            return self.handleCreateProfile(self)
-        elif self.state == 'USER SCORES':
-            return self.handleUserScores(self)
-        elif self.state == 'HOME':
-            return self.handleHomeScreen(self)
-        elif self.state == 'NEXT LEVEL':
-            return self.handleNextLevel(self)
-        elif self.state == 'DEATH':
-            return self.handleDeath(self)
-        elif self.state == 'SETTINGS':
-            return self.handleSettings(self)
-        elif self.state == 'SCORES':
-            return self.handleHighScores(self)
-        elif self.state == 'PAUSE':
-            return self.handlePause(self)
-        elif self.state == 'QUIT':
-            return self.handleQuit(self) """
-
-
 
 
 
