@@ -165,16 +165,12 @@ class player(entity):
                 return False
         
         enemy_tank_locations = self.map.get_enemy_tanks()
-
-        print('enemy tanks below:')
-        print(enemy_tank_locations)
-            
-        # here we now need to check the positions of the enemy tanks (players should not be able to move into the enemy tanks)
-
-
+        for enemy_tank in enemy_tank_locations:
+            if (enemy_tank.position_x - 25 <= possible_x_position <= enemy_tank.position_x + 25) and \
+            (enemy_tank.position_y - 25 <= possible_y_position <= enemy_tank.position_y + 25):
+                return False
         return True
 
-     #   map_entities = self.map.get_entities()
 
 # we need to get the firing position and this is based off the angle 
     def get_firing_position(self): 

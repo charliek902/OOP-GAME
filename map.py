@@ -66,12 +66,10 @@ class map():
     def remove_enemy_tank(self, tank):
         self.enemy_tanks.remove(tank)
 
-    
     # basically just need to increase x by 25 and y by 25 
     def get_wall_locations(self):
         return self.wall_coordinates
 
-    
     # want to generate 12 walls for the game which are roughly spaced out 
     def generate_walls(self):
         # this boolean will be set to true if another wall is within the random coordinates range of 25 
