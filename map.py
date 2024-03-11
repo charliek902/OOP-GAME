@@ -105,12 +105,12 @@ class map():
             self.walls.append(game_wall)
             # resets the x value back to 0 when walls have been created in the far reaches of the game 
             if start_x > 700:
-                start_y += 100
-                end_y += 100
+                start_y += 150
+                end_y += 150
                 start_x = -200
                 end_x = 0
-            start_x += 250
-            end_x += 250
+            start_x += 300
+            end_x += 300
 
     
     def update_walls(self):
