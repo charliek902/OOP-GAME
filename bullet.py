@@ -31,21 +31,27 @@ class bullet(entity):
             # need to remove the bullet from the bullet array if it collides with a wall...
             if self.check_wall_collision():
                 self.state = 'DEAD'
+            if self.check_enenmy_tank_collision():
+                self.state = 'DEAD'
             
-            print(self.state)
+
+            # i think there seems to be a problem with the code below:
+            
+            
 
             map_entities = self.map.get_entities()
-            for entity_name, entity_positions in map_entities.items():
-                entity_x = entity_positions[0]  
-                entity_y = entity_positions[1]  
-                entity_width = 25  
-                entity_height = 25  
+            if map_entities:
+                for entity_name, entity_positions in map_entities.items():
+                    entity_x = entity_positions[0]  
+                    entity_y = entity_positions[1]  
+                    entity_width = 25  
+                    entity_height = 25  
 
-                if (entity_x <= self.position_x <= entity_x + entity_width) and \
-                (entity_y <= self.position_y <= entity_y + entity_height):
-                    entity_damaged = self.map.get_entity(entity_name)
-                    self.points += 10
-                    print(entity_damaged)
+                    if (entity_x <= self.position_x <= entity_x + entity_width) and \
+                    (entity_y <= self.position_y <= entity_y + entity_height):
+                        entity_damaged = self.map.get_entity(entity_name)
+                        self.points += 10
+                        print(entity_damaged)
 
                     # need to remove the health by 10 from the enemy tank and you also need to remove the bullet 
                     # from the game 
@@ -68,6 +74,19 @@ class bullet(entity):
                 elif (dx <= possible_x_position <= dx + 40) and (dy <= possible_y_position <= dy + 40):
                     return True
             return False
+        
+        def check_enenmy_tank_collision(self):
+            possible_x_position = self.bullet_rec.x - self.speed * math.sin(math.radians(self.angle - 90))
+            possible_y_position = self.bullet_rec.y - self.speed * math.cos(math.radians(self.angle - 90))
+            enemy_tanks = self.map.get_enemy_tanks()
+            for enemy in enemy_tanks:
+                if (enemy.position_x <= possible_x_position <= enemy.position_x + enemy.DEFAULT_IMAGE_SIZE[0]) and \
+                (enemy.position_y <= possible_y_position <= enemy.position_y + enemy.DEFAULT_IMAGE_SIZE[1]):
+                    # reduce enemy health and change the bullet state to DEAD
+                    enemy.health -= 10
+                    return True
+            return False
+
   
             
         def update(self):

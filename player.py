@@ -159,10 +159,10 @@ class player(entity):
         # checks the wall locations and whether the player can move there 
         wall_locations = self.map.get_wall_locations()
         for dx, dy in wall_locations:
-            if self.angle == 0 or self.angle == -270:
+            if self.angle == 0 or self.angle == -270 or self.angle == -45 or self.angle == 45 or self.angle == -315:
                 if (dx - 25 <= possible_x_position <= dx + 40) and (dy - 25 <= possible_y_position <= dy + 40):
                     return False
-            if self.angle == -90:
+            if self.angle == -90 or self.angle == -135:
                 if (dx - 25 <= possible_x_position <= dx + 40) and (dy - 25 <= possible_y_position <= dy + 40):
                     return False
             elif (dx <= possible_x_position <= dx + 40) and (dy <= possible_y_position <= dy + 40):

@@ -107,10 +107,10 @@ class map():
             if start_x > 700:
                 start_y += 100
                 end_y += 100
-                start_x = 0
-                end_x = 50
-            start_x += 200
-            end_x += 200
+                start_x = -200
+                end_x = 0
+            start_x += 250
+            end_x += 250
 
     
     def update_walls(self):
