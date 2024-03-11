@@ -122,9 +122,7 @@ class tank(enemy, entity):
         closest_entity = heapq.heappop(entities)
         
         # need to dodge the closest entity 
-    
-    def add_enemy_healthbar(self, healthbar):
-        self.healthbar = healthbar
+
     
 
 

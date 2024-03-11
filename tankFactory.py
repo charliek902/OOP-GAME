@@ -42,8 +42,6 @@ class tankFactory():
             enemy_tank = tank('SEARCH', x, y, self.health, self.player, self.map, 'TANK')
             self.test_surface = pygame.image.load('game_images/background.png')
             self.test_surface = pygame.transform.scale(self.test_surface, (800, 400)).convert_alpha()
-            enemy_health_bar = healthbar(x, y, 60, 10, 100, self.test_surface, enemy_tank)
-            enemy_tank.add_enemy_healthbar(enemy_health_bar)
             # 60 ,10, 100, game_state.test_surface, shooter
             self.map.add_entity(enemy_tank)
             self.map.add_enemy_tank(enemy_tank)
@@ -56,7 +54,5 @@ class tankFactory():
         self.enemies_list.remove(tank)
     
     
-
-            #   def __init__(self, state, position_x, position_y, health, player, map, type):
 
     
