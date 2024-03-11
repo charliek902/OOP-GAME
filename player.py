@@ -134,7 +134,6 @@ class player(entity):
             if isinstance(bullet_instance, bullet) and bullet_instance.state != 'DEAD':
                 bullet_instance.update()
             else:
-                print('goes here Charlie!')
                 self.bullets.remove(bullet_instance)
     
     def update_points(self):
@@ -145,10 +144,7 @@ class player(entity):
             firing_position = self.get_firing_position()
             bullet_created = bullet('alive', firing_position[0], firing_position[1], 100, 'BULLET', self.angle, self.map, self.game)
             self.bullets.append(bullet_created)
-            self.frames_until_player_can_fire = 30
-
-            print('below are the points count...')
-            print(self.game.points)
+            self.frames_until_player_can_fire = 20
 
 
 # this function also needs to check the angle of the player as well, 
