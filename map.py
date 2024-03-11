@@ -47,7 +47,6 @@ class map():
     def get_nearby_entities_on_trajectory(self, object):
         entities_to_dodge = []
         heapq.heapify(entities_to_dodge)
-        self.convert_entity_map_to_array()
         # here we need to filter the entities and get entities and their types within the radius of the entitiy in question
         nearby_entities = self.entities.filter(self.retrieve_entities(object), self.entities)
         for entity in nearby_entities:

@@ -33,7 +33,6 @@ class player(entity):
         self.frames_until_player_can_fire = 0
 
     def check_health(self):
-
         if self.health <= 0:
             self.state = 'DEATH'
             if self.state == 'DEATH':
@@ -108,7 +107,7 @@ class player(entity):
         self.map = map
 
 
- # need to transform the image to a better resolution.... 
+    # need to transform the image to a better resolution.... 
     def turn(self, angle):
         self.image = pygame.image.load('game_images/shooter.png').convert()
         self.image = pygame.transform.scale(self.image, self.DEFAULT_IMAGE_SIZE)
@@ -147,7 +146,7 @@ class player(entity):
             self.frames_until_player_can_fire = 20
 
 
-# this function also needs to check the angle of the player as well, 
+    # this function also needs to check the angle of the player as well, 
 
     def check_can_move(self):
         possible_x_position = self.shooter_rec.x - self.speed * math.sin(math.radians(self.angle - 90))
@@ -164,6 +163,7 @@ class player(entity):
             elif (dx <= possible_x_position <= dx + 40) and (dy <= possible_y_position <= dy + 40):
                 return False
         
+        # checks the positions of enemies to stop users movinng into enemy tank locations 
         enemy_tank_locations = self.map.get_enemy_tanks()
         for enemy_tank in enemy_tank_locations:
             if (enemy_tank.position_x - 25 <= possible_x_position <= enemy_tank.position_x + 25) and \
@@ -172,7 +172,7 @@ class player(entity):
         return True
 
 
-# we need to get the firing position and this is based off the angle 
+    # we need to get the firing position and this is based off the angle 
     def get_firing_position(self): 
         firing_position = 0, 0
         if self.angle == 0:
@@ -212,14 +212,6 @@ class player(entity):
         elif self.position_x >= 775 and (self.angle == -45 or self.angle == 45 or self.angle == 0):
             return False
         return True
-        
-        
-    def reload():
-        print('reloading')
-            # would need to initialize a counter and keep it running for the reload 
-        
-    def initialize_counter():
-        print('initializing counter...')
         
 
 

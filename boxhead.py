@@ -47,15 +47,6 @@ while player_socket_connection:
       map_of_game.update_walls()
       player_info_counter.update(game_state.points, game_level_generator.level, game_level_generator.remaining_enemy_tanks)
       
-
-    elif game_state.renderer.state == 'LOGIN':
-      game_state.renderer.handleLogin()
-    elif game_state.renderer.state == 'CREATE':
-      game_state.renderer.handleCreateProfile()
-    elif game_state.renderer.state == 'USER SCORES':
-      game_state.renderer.handleUserScores()
-      
-
     clock = pygame.time.Clock()
     FPS = 60 
     clock.tick(FPS)

@@ -28,7 +28,6 @@ class bullet(entity):
              return self.image
         
         def check_collision_with_entities(self):
-            # need to remove the bullet from the bullet array if it collides with a wall...
             if self.check_wall_collision():
                 self.state = 'DEAD'
             elif self.check_enemy_tank_collision():
@@ -63,8 +62,6 @@ class bullet(entity):
                     return True
             return False
 
-  
-            
         def update(self):
             self.bullet_rec.x -= self.speed * math.sin(math.radians(self.angle - 90))
             self.bullet_rec.y -= self.speed * math.cos(math.radians(self.angle - 90))
