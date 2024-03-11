@@ -29,8 +29,6 @@ class map():
     def add_enemy_tank(self, tank):
         self.enemy_tanks.append(tank)
     
-    def del_enemy_tank(self, tank):
-        self.enemy_tanks.remove(tank)
     
     def get_enemy_tanks(self):
         return self.enemy_tanks
@@ -40,15 +38,10 @@ class map():
             del self.entity_map[entity.name]
             self.entity_hash_names.remove(entity.name)
     
-    def convert_entity_map_to_array(self):
-        self.entities = list(self.entity_map)
 
     def update_entity_location(self, object_name, x_position, y_position):
         self.entity_map[object_name] = [x_position, y_position]
 
-    def get_user_radius_border(self):
-        # LEFT, RIGHT, UP, DOWN
-        return [self.player.x - 100, self.player.x + 100, self.player.y - 100, self.player.y + 100]
 
     # here we want to filter the map for the entities which are closest to the object (I say within 50 pixels)
     def get_nearby_entities_on_trajectory(self, object):
@@ -73,16 +66,6 @@ class map():
     def remove_enemy_tank(self, tank):
         self.enemy_tanks.remove(tank)
 
-
-    def retrieve_entities(self, object):
-        lower_x_bound = object.x_position - 50
-        upper_x_bound = object.x_position + 50
-        lower_y_bound = object.y_position - 50
-        upper_y_bound = object.y_position + 50
-        if self.entities.x_position > lower_x_bound and self.entities.x_position < upper_x_bound \
-         and self.entities.y_position < upper_y_bound and self.entities.y_position > lower_y_bound:
-            return True
-        return False
     
     # basically just need to increase x by 25 and y by 25 
     def get_wall_locations(self):
@@ -103,7 +86,7 @@ class map():
             self.wall_coordinates.append([x, y])
             game_wall = wall('alive', x, y, 100, 'WALL')
             self.walls.append(game_wall)
-            # resets the x value back to 0 when walls have been created in the far reaches of the game 
+            # resets the x value back to 0 when walls have been created at the end of the x axis of the map 
             if start_x > 700:
                 start_y += 150
                 end_y += 150
