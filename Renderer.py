@@ -30,7 +30,7 @@ class Renderer():
 
     def handleHomeScreen(self):
         self.render_background()
-        resume = text(280, 100, 'Resume / Pause- Click "p"', self.screen)
+        play = text(280, 100, 'Click p to start', self.screen)
         controls = text(200, 200, 'Controls- arrow keys to move and space bar to shoot', self.screen)
         quit = text(320, 300, 'Quit- Press escape', self.screen)
 
@@ -40,8 +40,10 @@ class Renderer():
         restart = text(280, 100, 'Restart- Press "r"', self.screen)
         controls = text(200, 200, 'Controls- arrow keys to move and space bar to shoot', self.screen)
         quit = text(320, 300, 'Quit- Press escape', self.screen)
-        print(self.state)
     
+    def handlePlay(self):
+        self.state = 'PLAY'
+
 
     def handlePause(self):
         if self.state != 'PAUSE':

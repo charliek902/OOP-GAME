@@ -142,8 +142,6 @@ class player(entity):
             self.bullets.append(bullet_created)
             self.frames_until_player_can_fire = 20
         
-        self.health -= 10
-
 
     # this function also needs to check the angle of the player as well, 
 

@@ -17,8 +17,11 @@ class keyboardHandler():
             if event.unicode == '\x1b' or event.unicode == 'q':
                 self.renderer.handleQuit()
         if event.type == pygame.KEYDOWN:
-            if event.unicode == 'p':
+            if event.unicode == 'p' and self.renderer.state != 'HOME':
                 self.renderer.handlePause()
+            elif event.unicode == 'p' and self.renderer.state == 'HOME':
+                self.renderer.handlePlay()
+            
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_UP and event.key == pygame.K_LEFT:
                 self.player.moveDiagonalUpLeft()
