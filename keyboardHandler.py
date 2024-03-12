@@ -54,6 +54,7 @@ class keyboardHandler():
             self.player.move_left()
         elif keys[pygame.K_RIGHT]:
             self.player.move_right()
+        
        
         if keys[pygame.K_SPACE]:
             self.player.fire()

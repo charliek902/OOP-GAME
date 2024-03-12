@@ -35,10 +35,7 @@ class player(entity):
     def check_health(self):
         if self.health <= 0:
             self.state = 'DEATH'
-            if self.state == 'DEATH':
-                pygame.quit()
-                exit()
-
+ 
     def get_position(self):
         return self.position_x, self.position_y
 
@@ -144,6 +141,8 @@ class player(entity):
             bullet_created = bullet('alive', firing_position[0], firing_position[1], 100, 'BULLET', self.angle, self.map, self.game)
             self.bullets.append(bullet_created)
             self.frames_until_player_can_fire = 20
+        
+        self.health -= 10
 
 
     # this function also needs to check the angle of the player as well, 

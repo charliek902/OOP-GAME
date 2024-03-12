@@ -1,13 +1,15 @@
 # this class handles page renderering from different changes in state of the Game
 import pygame
+from text import text
 
 class Renderer():
-    def __init__(self):
-        self.state = 'HOME'
-        self.screen_height = 800
-        self.screen_width = 400
-        self.screen = pygame.display.set_mode((self.screen_height, self.screen_width))
-        self.handleHomeScreen()
+    def __init__(self, state):
+        self.state = state
+        self.screen_width = 800
+        self.screen_height = 400
+        self.screen = pygame.display.set_mode((self.screen_width, self.screen_height))
+        self.test_surface = None
+        self.handleStateChange()
 
     def set_state(self, state):
         self.state = state
@@ -17,53 +19,44 @@ class Renderer():
     
     def handleStateChange(self):
         if self.state == 'HOME':
-            return self.handleHomeScreen(self)
-        elif self.state == 'CONTROLS':
-            return self.handleControlsDisplay(self)
-        elif self.state == 'NEXT LEVEL':
-            return self.handleNextLevel(self)
+            return self.handleHomeScreen()
         elif self.state == 'DEATH':
-            return self.handleDeath(self)
+            return self.handleDeath()
         elif self.state == 'PAUSE':
-            return self.handlePause(self)
+            return self.handlePause()
         elif self.state == 'QUIT':
-            return self.handleQuit(self)
+            return self.handleQuit()
 
 
-    # controls should be on the home screen 
     def handleHomeScreen(self):
-        self.state == 'HOME'
-        self.test_surface = pygame.image.load('game_images/background.png')
-        self.test_surface = pygame.transform.scale(self.test_surface, (800, 400)).convert_alpha()
-        self.screen.blit(self.test_surface, (0,0))
+        self.render_background()
+        resume = text(280, 100, 'Resume / Pause- Click "p"', self.screen)
+        controls = text(200, 200, 'Controls- arrow keys to move and space bar to shoot', self.screen)
+        quit = text(320, 300, 'Quit- Press escape', self.screen)
 
 
-    # this should do a counter on the map with numbers Next level! (3....2....1....)
-    def handleNextLevel(self):
-        print('next level')
-
-    # render a screen (retry, go to main menu)
     def handleDeath(self):
-        print('death')
+        self.render_background()
+        restart = text(280, 100, 'Restart- Press "r"', self.screen)
+        controls = text(200, 200, 'Controls- arrow keys to move and space bar to shoot', self.screen)
+        quit = text(320, 300, 'Quit- Press escape', self.screen)
+        print(self.state)
     
-    def handleControlsDisplay(self):
-        print('shows a screen with the controls!')
-
-
-
-    # buttons need to come here.... (retry, go to main menu, resume, controls)
 
     def handlePause(self):
         if self.state != 'PAUSE':
             self.state = 'PAUSE'
-            self.test_surface = pygame.image.load('game_images/background.png')
-            self.test_surface = pygame.transform.scale(self.test_surface, (800, 400)).convert_alpha()
-            self.font = pygame.font.SysFont(None, 24)
-            self.screen.blit(self.test_surface, (0,0))
-            img = self.font.render('Would you like to return back to the game?' , True, "blue")
-            self.screen.blit(img, (20, 20))
+            self.render_background()
+            resume = text(280, 100, 'Resume / Pause- Click "p"', self.screen)
+            controls = text(200, 200, 'Controls- arrow keys to move and space bar to shoot', self.screen)
+            quit = text(320, 300, 'Quit- Press escape', self.screen)
         else:
             self.state = 'PLAY'
+
+    def render_background(self):
+        self.test_surface = pygame.image.load('game_images/background.png')
+        self.test_surface = pygame.transform.scale(self.test_surface, (800, 400)).convert_alpha()
+        self.screen.blit(self.test_surface, (0,0))
     
     def handleQuit(self):
         pygame.quit()

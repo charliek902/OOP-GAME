@@ -4,17 +4,15 @@ import pygame
 # in this class the player points, the number of rounds completed and the number of remaining enemies left is rendered on the screen 
 
 class game_info(entity):
-    def __init__(self, x, y, initial_points):
+    def __init__(self, x, y, initial_points, renderer):
         self.x = x
         self.y = y
         self.figure = initial_points
+        self.renderer_state = renderer.state
         self.screen = pygame.display.set_mode((800, 400))
         self.font = pygame.font.SysFont(None, 24)
-        img = self.font.render('Points:' + str(self.figure) + ' Rounds completed: ' + str(0) + ' Rounds remaining: ' + str(0), True, "blue")
-        self.screen.blit(img, (20, 20))
-        
 
-    
+
     def update(self, player_points, rounds_completed, remaining_enemies):
         self.figure = player_points
         img = self.font.render('Points: ' + str(self.figure), True, "blue")
