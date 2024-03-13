@@ -58,7 +58,6 @@ class bullet(entity):
                 (enemy.position_y <= possible_y_position <= enemy.position_y + enemy.DEFAULT_IMAGE_SIZE[1]):
                     # reduce enemy health and change the bullet state to DEAD
                     enemy.health -= 10
-                    self.points += 10
                     return True
             return False
 

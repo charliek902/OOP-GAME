@@ -24,7 +24,7 @@ def initialize_game():
     command_handler = keyboardHandler(renderer, shooter)
     map_of_game.generate_walls()
     player_healthbar = healthbar(720, 20, 60, 10, 100, game_state.test_surface, shooter)
-    player_info = game_info(20, 20, 0, renderer)
+    player_info = game_info(20, 20, renderer)
 
     return player_socket_connection, renderer, game_state, shooter, map_of_game, \
         game_level_generator, command_handler, player_healthbar, player_info
@@ -61,7 +61,7 @@ def main():
             shooter.update_player_bullets()
             game_level_generator.update()
             map_of_game.update_walls()
-            player_info.update(game_state.points, game_level_generator.level, game_level_generator.remaining_enemy_tanks)
+            player_info.update(game_level_generator.level, game_level_generator.remaining_enemy_tanks)
 
         clock = pygame.time.Clock()
         FPS = 60
