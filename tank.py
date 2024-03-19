@@ -47,7 +47,7 @@ class tank(enemy, entity):
         self.map = map
         self.move_strategy = tankMovement(self.map)
         # the initial angle of the tank is facing downwards... 
-        self.angle = 180
+        self.angle = -90
         self.type = type
         self.healthbar = None
     
@@ -89,9 +89,8 @@ class tank(enemy, entity):
 
     def turnToPlayer(self):
 
-        turn_speed = 0.00000000001
 
-        # will probably need to calculate how to turn towards the points from the dep first search algorithm.... 
+
 
         # Calculate angle towards the player
         dx = self.player.position_x - self.position_x
@@ -100,6 +99,9 @@ class tank(enemy, entity):
 
         # Calculate angle difference between current angle and angle to player
         angle_difference = (angle_to_player - self.angle) % 360
+        angle_difference *= -1
+
+        print("Angle difference:", angle_difference)
 
         self.image = pygame.image.load('game_images/red_tank.png').convert()
         self.image = pygame.transform.scale(self.image, self.DEFAULT_IMAGE_SIZE)
