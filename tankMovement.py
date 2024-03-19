@@ -19,6 +19,13 @@ class tankMovement():
 
 
     def generate_shortest_path(self):
+        # check if angle to player is clear 
+
+
+
+
+
+
         print('generates the shortest path')
         # check if there are any walls between the tank and the player 
 

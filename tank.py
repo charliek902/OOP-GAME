@@ -3,6 +3,7 @@
 from enemy import enemy
 from entity import entity
 from tankMovement import tankMovement
+import math
 import pygame
 import random
 import heapq
@@ -86,13 +87,31 @@ class tank(enemy, entity):
             name = hash(random.randint(0,1000))
         return name
 
-    def turnToPlayer():
-        print('turns to the player')
+    def turnToPlayer(self):
+
+        turn_speed = 0.00000000001
+
+        # will probably need to calculate how to turn towards the points from the dep first search algorithm.... 
+
+        # Calculate angle towards the player
+        dx = self.player.position_x - self.position_x
+        dy = self.player.position_y - self.position_y
+        angle_to_player = math.degrees(math.atan2(dy, dx))
+
+        # Calculate angle difference between current angle and angle to player
+        angle_difference = (angle_to_player - self.angle) % 360
+
+        self.image = pygame.image.load('game_images/red_tank.png').convert()
+        self.image = pygame.transform.scale(self.image, self.DEFAULT_IMAGE_SIZE)
+
+        # Update tank's image with rotated one
+        self.image = pygame.transform.rotate(self.image, angle_difference)
  
     def moveToPlayer(self):
         print('moves to player!')
-        path = self.move_strategy.move(self.position_x, self.position_y)
-        self.followPath(path)
+      #  path = self.move_strategy.move(self.position_x, self.position_y)
+      #  self.followPath(path)
+        self.turnToPlayer()
 
         # I think we need to implement a strategy class here
     
@@ -116,6 +135,16 @@ class tank(enemy, entity):
        # self.check_collide()
         self.map.update_entity_location(self.name, self.position_x, self.position_y)
         self.screen.blit(self.image, self.tank_rec)
+    
+    def get_distance_to_player(self):
+        # returns the manhattan distace to the player 
+        return ((self.player.postion_x - self.position_x) * (self.player.postion_x - self.position_x)) \
+        + ((self.player.position_y - self.position_y) * (self.player.position_y - self.position_y))
+
+    def is_path_to_player_obstructed(self):
+        print('jasdfnoksdl')
+
+
 
     
     def dodge_entity(self, entities):
