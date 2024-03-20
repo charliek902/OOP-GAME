@@ -26,8 +26,7 @@ def initialize_game():
     player_healthbar = healthbar(720, 20, 60, 10, 100, game_state.test_surface, shooter)
     player_info = game_info(20, 20, renderer)
 
-    return player_socket_connection, renderer, game_state, shooter, map_of_game, \
-        game_level_generator, command_handler, player_healthbar, player_info
+    return player_socket_connection, renderer, game_state, shooter, map_of_game, game_level_generator, command_handler, player_healthbar, player_info
 
 # Restart function
 def restart_game():
@@ -48,8 +47,7 @@ def main():
                 renderer.set_state('DEATH')
                 renderer.handleStateChange()
             elif shooter.state == 'DEATH' and event.type == pygame.KEYDOWN and event.key == pygame.K_r:
-                player_socket_connection, renderer, game_state, shooter, map_of_game, 
-                game_level_generator, command_handler, player_healthbar, player_info = restart_game()
+                player_socket_connection, renderer, game_state, shooter, map_of_game, game_level_generator, command_handler, player_healthbar, player_info = restart_game()
 
         if game_state.renderer.state == 'HOME' or game_state.renderer.state == 'QUIT':
             renderer.handleStateChange()

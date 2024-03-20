@@ -38,6 +38,9 @@ class map():
             del self.entity_map[entity.name]
             self.entity_hash_names.remove(entity.name)
     
+    def get_player(self):
+        return self.player
+    
 
     def update_entity_location(self, object_name, x_position, y_position):
         self.entity_map[object_name] = [x_position, y_position]

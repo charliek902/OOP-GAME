@@ -10,10 +10,6 @@ class enemy(entity):
         self.player = player
 
     @abstractmethod
-    def interpret_state():
-        print('interpreting the state of the devil, responds with actions')
-    
-    @abstractmethod
     def moveToPlayer():
         print('searches for the player')
 

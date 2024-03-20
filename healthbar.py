@@ -16,7 +16,7 @@ class healthbar(entity):
         self.type = None
 
     def display(self):
-        self.ratio = self.player.health / self.points
+        self.ratio = self.player.health / 100
         pygame.draw.rect(self.screen, "red", (self.player.position_x - 15, self.player.position_y - 20, self.width, self.height))
         pygame.draw.rect(self.screen, "green", (self.player.position_x - 15, self.player.position_y - 20, self.width * self.ratio, self.height))
         pygame.display.flip() 

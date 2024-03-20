@@ -9,28 +9,6 @@ import pygame
 import random
 import heapq
 
-# needs to turn move towards the player
-# needs to calculate the quickest path to the distance from the player (through a dfs) ----> strategy here???
-# so needs to go to the outer rim of player radius, for each iteration needs to calculate path to player
-# within this path tank should rotate and go to each coordinate of the path which has been constructed via a dfs
-
-# dfs itself would prioritise directions to be closer to the player for each iteration of the dfs 
-
-# we would have a path (array of coordinates) ---> this would constanly be appended to 
-
-# within range the tanks need to turn towards the player 
-
-# for other tanks their behavior will be different 
-
-# defualt state of the tank is down 
-
-# different kinds of STATES for the tank:
-
-# DODGE STATE 
-# SEARCH STATE
-# FIRE STATE 
-
-
 class tank(enemy, entity):
     def __init__(self, state, position_x, position_y, health, player, map, type, game):
         self.state = state
@@ -47,44 +25,12 @@ class tank(enemy, entity):
         self.name = self.set_hash_name(map)
         self.map = map
         self.move_strategy = tankMovement(self.map)
-        # the initial angle of the tank is facing downwards... 
         self.angle = -90
         self.type = type
-        self.healthbar = None
         self.frame_until_fire = 0
         self.game = game
         self.enemy_bullets = []
     
-
-    def interpret_state(self):
-        # should first check if state should be DODGE
-        entities_nearby_and_on_trajectory = self.map.get_nearby_entities_on_trajectory()
-        if len(entities_nearby_and_on_trajectory) > 0:
-            # if one is a bullet --> set state to Dodge
-            self.state = 'DODGE'
-            # dodge the closest bullet 
-            self.dodge_entity(entities_nearby_and_on_trajectory)
-
-        # if the enemy is within firing distance, enemy should fire
-        else:
-            # this needs to be better... 
-            user_radius = self.map.get_user_radius_border()
-            if user_radius > 0:
-                self.state == 'FIRE'
-                # if current tank within this radius, fire! 
-                self.fire()
-
-                # else state should be in search Mode 
-
-                # 2 different types of search Mode --> check if you can go straight to the player 
-                # check if path is clear 
-                # else you need to follow the dfs path 
-                # this path would have to be constructed each time (maybe the strategy class would have to do this....)
-            else:
-                self.state == 'SEARCH'
-                self.moveToPlayer()
-        
-
     def set_hash_name(self, map):
         name = hash(random.randint(0,1000))
         while name in map.entity_hash_names:
@@ -95,7 +41,7 @@ class tank(enemy, entity):
         return self.angle
     
     def get_angle_to_player(self):
-         # Calculate angle towards the player
+         # Calculate angle towards the player 
         dx = self.player.position_x - self.position_x
         dy = self.player.position_y - self.position_y
         angle_to_player = math.degrees(math.atan2(dy, dx))
@@ -117,6 +63,7 @@ class tank(enemy, entity):
         self.image = pygame.transform.rotate(self.image, angle_difference)
  
     def moveToPlayer(self):
+        # self.strategy.move(self.x, self.y)
         print('moves to player!')
       #  path = self.move_strategy.move(self.position_x, self.position_y)
       #  self.followPath(path)
@@ -125,6 +72,8 @@ class tank(enemy, entity):
         # I think we need to implement a strategy class here
     
     def check_health(self):
+        print(self.health)
+
         if self.health <= 0:
             self.state = 'DEAD'
 
@@ -136,12 +85,11 @@ class tank(enemy, entity):
 
     def fire(self):
         distance = self.get_distance_to_player()
-        if self.frame_until_fire > 20:
-            return
-        elif distance < 15000 and self.frame_until_fire == 0:
+        if distance < 15000 and self.frame_until_fire == 0:
             firing_position = self.get_firing_position()
             angle = self.get_angle_to_player()
-            bullet_created = bullet('alive', firing_position[0], firing_position[1], 100, 'BULLET', angle * -1 + 90, self.map, self.game)
+            player_position = (self.player.position_x, self.player.position_y)
+            bullet_created = bullet('alive', firing_position[0], firing_position[1], 100, 'BULLET', angle * -1 + 90, self.map, self.game, 'TANK')
             self.enemy_bullets.append(bullet_created)
             self.frame_until_fire = 20
         elif self.frame_until_fire > 0:
@@ -153,8 +101,6 @@ class tank(enemy, entity):
         self.moveToPlayer()
         self.fire()
         self.update_enemy_bullets()
-       # self.check_collide()
-        self.map.update_entity_location(self.name, self.position_x, self.position_y)
         self.screen.blit(self.image, self.tank_rec)
     
     def get_distance_to_player(self):
@@ -162,24 +108,6 @@ class tank(enemy, entity):
         return ((self.player.position_x - self.position_x) * (self.player.position_x - self.position_x)) \
         + ((self.player.position_y - self.position_y) * (self.player.position_y - self.position_y))
 
-    def is_path_to_player_obstructed(self):
-        print('jasdfnoksdl')
-        angle = self.get_angle()
-        distance = self.get_distance_to_player()
-
-
-
-
-
-
-
-    
-    def dodge_entity(self, entities):
-        closest_entity = heapq.heappop(entities)
-        
-        # need to dodge the closest entity 
-
-    
 
     def get_firing_position(self): 
         firing_position = self.position_x + self.DEFAULT_IMAGE_SIZE[0] / 2 - 5, self.position_y + self.DEFAULT_IMAGE_SIZE[1] / 2
@@ -187,16 +115,4 @@ class tank(enemy, entity):
 
     def update_enemy_bullets(self):
         for bullet in self.enemy_bullets:
-            print(bullet)
-
-
             bullet.update()
-
-
-
- 
-
-        # let's get the center of the image 
-
-
-

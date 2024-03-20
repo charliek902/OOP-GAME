@@ -4,7 +4,7 @@ import pygame
 import math
 
 class bullet(entity):
-        def __init__(self, state, position_x, position_y, health, type, angle, map, game):
+        def __init__(self, state, position_x, position_y, health, type, angle, map, game, owner):
             self.state = state
             self.position_x = position_x 
             self.position_y = position_y 
@@ -22,6 +22,7 @@ class bullet(entity):
             self.bullet_rec = self.image.get_rect(topleft = (self.position_x, self.position_y))
             self.map = map
             self.collided = False
+            self.owner = owner
         
         def rotate(self, rotation_angle):
              self.image = pygame.transform.rotate(self.image, rotation_angle)
@@ -32,6 +33,11 @@ class bullet(entity):
                 self.state = 'DEAD'
             elif self.check_enemy_tank_collision():
                 self.state = 'DEAD'
+            elif self.check_player_tank_collision():
+                player = self.map.get_player()
+                player.health -= 3
+                
+            
             
         def check_wall_collision(self):
             possible_x_position = self.bullet_rec.x - self.speed * math.sin(math.radians(self.angle - 90))
@@ -57,9 +63,21 @@ class bullet(entity):
                 if (enemy.position_x <= possible_x_position <= enemy.position_x + enemy.DEFAULT_IMAGE_SIZE[0]) and \
                 (enemy.position_y <= possible_y_position <= enemy.position_y + enemy.DEFAULT_IMAGE_SIZE[1]):
                     # reduce enemy health and change the bullet state to DEAD
-                    enemy.health -= 10
+                    if self.owner == 'PLAYER':
+                        enemy.health -= 10
+                        return True
+            return False
+        
+        def check_player_tank_collision(self):
+            player = self.map.get_player()
+            possible_x_position = self.bullet_rec.x - self.speed * math.sin(math.radians(self.angle - 90))
+            possible_y_position = self.bullet_rec.y - self.speed * math.cos(math.radians(self.angle - 90))
+            if (player.position_x <= possible_x_position <= player.position_x + player.DEFAULT_IMAGE_SIZE[0]) and \
+                (player.position_y <= possible_y_position <= player.position_y + player.DEFAULT_IMAGE_SIZE[1]):
+                if self.owner == 'TANK':
                     return True
             return False
+
 
         def update(self):
             self.bullet_rec.x -= self.speed * math.sin(math.radians(self.angle - 90))
