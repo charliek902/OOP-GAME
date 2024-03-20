@@ -63,10 +63,14 @@ class tank(enemy, entity):
         self.image = pygame.transform.rotate(self.image, angle_difference)
  
     def moveToPlayer(self):
-        # self.strategy.move(self.x, self.y)
-        print('moves to player!')
-      #  path = self.move_strategy.move(self.position_x, self.position_y)
-      #  self.followPath(path)
+
+        # check distance to player, if distance is a certain length ---> use the path, turn towards the first point on the path
+        # and move towards it 
+        # else, turn to the player and fire at the player 
+        path = self.move_strategy.generateDfsPath(self.x, self.y)
+
+        # if path
+ 
         self.turnToPlayer()
 
         # I think we need to implement a strategy class here
@@ -89,8 +93,8 @@ class tank(enemy, entity):
             firing_position = self.get_firing_position()
             angle = self.get_angle_to_player()
             player_position = (self.player.position_x, self.player.position_y)
-            bullet_created = bullet('alive', firing_position[0], firing_position[1], 100, 'BULLET', angle * -1 + 90, self.map, self.game, 'TANK')
-            self.enemy_bullets.append(bullet_created)
+            enemy_bullet = bullet('alive', firing_position[0], firing_position[1], 100, 'BULLET', angle * -1 + 90, self.map, self.game, 'TANK')
+            self.enemy_bullets.append(enemy_bullet)
             self.frame_until_fire = 20
         elif self.frame_until_fire > 0:
             self.frame_until_fire -= 1

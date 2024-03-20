@@ -9,27 +9,45 @@ class tankMovement():
         self.x = x
         self.y = y
 
-    
-    def move(self, x, y):
-        path = self.generateDfsPath()
 
-# this function will create a list of coordinates leading to the player
-# that will move around walls 
+
     def generateDfsPath(self):
+        def dfs(self, possible_x, possible_y):
+            distance = self.get_distance_to_player(possible_x, possible_y)
+            if distance < 1000:
+                return path
+
+            for dx, dy in directions:
+                next_x = possible_x + dx
+                next_y = possible_y + dy 
+                if self.check_closer_to_player(next_x, next_y) and not self.check_if_coordinate_in_wall(next_x, next_y):
+                    path.append([next_x, next_y])
+                    return dfs(next_x, next_y)
+            path.pop()
+       
         path = []
+        possible_x = self.x
+        possible_y = self.y
+        # DIRECTIONS TO GO RIGHT, DOWN, LEFT AND UP 10 PIXELS 
         directions = [[0, 10], [10, 0], [0, -10], [-10, 0]]
-        print('dfs!')
+        return dfs(possible_x, possible_y)
+
+    
         
-    def check_closer_to_player(self):
+    def check_closer_to_player(self, next_x, next_y):
         print('checks if coordinate is closer to the player!')
     
-    def check_if_coordinate_in_wall(self):
+    def check_if_coordinate_in_wall(self, next_x, next_y):
         print('checks if the coordinate is in a wall!')
+        return True
 
-    def get_distance_to_player(self):
+    def get_distance_to_player(self, x, y):
         # returns the manhattan distace to the player 
-        return ((self.player.position_x - self.x) * (self.player.position_x - self.x)) \
-        + ((self.player.position_y - self.y) * (self.player.position_y - self.y))
+        return ((self.player.position_x - x) * (self.player.position_x - x)) \
+        + ((self.player.position_y - y) * (self.player.position_y - y))
+    
+
+# TANK SHOULD GET COORDINATES, TURN TOWARDS THEM UNTIL DISTANCE ---> THEN TANK SHOULD AIM AND FIRE AT ENEMY 
     
 
 
