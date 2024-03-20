@@ -2,15 +2,17 @@ from tankFactory import tankFactory
 from map import map 
 
 class levelGenerator():
-    def __init__(self, map, player):
+    def __init__(self, map, player, game):
         self.level = 1
         self.player = player
+        self.game = game
         self.map = map
-        self.enemy_tank_factory = tankFactory(self.map, self.player)
+        self.enemy_tank_factory = tankFactory(self.map, self.player, self.game)
         self.enemy_tanks = []
         self.remaining_enemy_tanks = 0
         self.rendering = False
         self.enemy_tank_factory.create_enemy_tanks()
+        self.game = game
 
     def level_up(self):
         self.level += 1

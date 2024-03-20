@@ -20,7 +20,7 @@ def initialize_game():
     shooter = player('alive', 170, 80, 5, 0, 5, 0, None, game_state)
     map_of_game = map(shooter)
     shooter.set_map(map_of_game)
-    game_level_generator = levelGenerator(map_of_game, shooter)
+    game_level_generator = levelGenerator(map_of_game, shooter, game_state)
     command_handler = keyboardHandler(renderer, shooter)
     map_of_game.generate_walls()
     player_healthbar = healthbar(720, 20, 60, 10, 100, game_state.test_surface, shooter)

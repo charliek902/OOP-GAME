@@ -5,7 +5,7 @@ from healthbar import healthbar
 import pygame
 
 class tankFactory():
-    def __init__(self, map, player):
+    def __init__(self, map, player, game):
         self.level = 1
         self.enemies = 0
         self.health = 20
@@ -15,6 +15,7 @@ class tankFactory():
         self.player = player
         self.enemies_list = []
         self.enemy_starting_coordinates = []
+        self.game = game
     
     # we need to create L, R, Up and Down tanks of the screen... 
     def generate_random_coordinates(self):
@@ -39,7 +40,7 @@ class tankFactory():
             
         for i in range(0, self.enemies):
             x, y = self.generate_random_coordinates()
-            enemy_tank = tank('SEARCH', x, y, self.health, self.player, self.map, 'TANK')
+            enemy_tank = tank('SEARCH', x, y, self.health, self.player, self.map, 'TANK', self.game)
             self.test_surface = pygame.image.load('game_images/background.png')
             self.test_surface = pygame.transform.scale(self.test_surface, (800, 400)).convert_alpha()
             # 60 ,10, 100, game_state.test_surface, shooter

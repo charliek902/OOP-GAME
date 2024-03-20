@@ -3,6 +3,7 @@
 from enemy import enemy
 from entity import entity
 from tankMovement import tankMovement
+from bullet import bullet
 import math
 import pygame
 import random
@@ -31,7 +32,7 @@ import heapq
 
 
 class tank(enemy, entity):
-    def __init__(self, state, position_x, position_y, health, player, map, type):
+    def __init__(self, state, position_x, position_y, health, player, map, type, game):
         self.state = state
         self.entity_hash_name = hash(random.randint(0, 1000))
         self.position_x = position_x
@@ -50,6 +51,9 @@ class tank(enemy, entity):
         self.angle = -90
         self.type = type
         self.healthbar = None
+        self.frame_until_fire = 0
+        self.game = game
+        self.enemy_bullets = []
     
 
     def interpret_state(self):
@@ -86,22 +90,25 @@ class tank(enemy, entity):
         while name in map.entity_hash_names:
             name = hash(random.randint(0,1000))
         return name
-
-    def turnToPlayer(self):
-
-
-
-
-        # Calculate angle towards the player
+    
+    def get_angle(self):
+        return self.angle
+    
+    def get_angle_to_player(self):
+         # Calculate angle towards the player
         dx = self.player.position_x - self.position_x
         dy = self.player.position_y - self.position_y
         angle_to_player = math.degrees(math.atan2(dy, dx))
 
         # Calculate angle difference between current angle and angle to player
         angle_difference = (angle_to_player - self.angle) % 360
-        angle_difference *= -1
+        return angle_difference
 
-        print("Angle difference:", angle_difference)
+
+    def turnToPlayer(self):
+
+        angle_difference = self.get_angle_to_player()
+        angle_difference *= -1
 
         self.image = pygame.image.load('game_images/red_tank.png').convert()
         self.image = pygame.transform.scale(self.image, self.DEFAULT_IMAGE_SIZE)
@@ -127,24 +134,42 @@ class tank(enemy, entity):
 
         print('now we need to move to the player...')
 
-    def fire():
-        print('attacks!')
-        # NB: this should be firing when at a certain distance 
+    def fire(self):
+        distance = self.get_distance_to_player()
+        if self.frame_until_fire > 20:
+            return
+        elif distance < 15000 and self.frame_until_fire == 0:
+            firing_position = self.get_firing_position()
+            angle = self.get_angle_to_player()
+            bullet_created = bullet('alive', firing_position[0], firing_position[1], 100, 'BULLET', angle * -1 + 90, self.map, self.game)
+            self.enemy_bullets.append(bullet_created)
+            self.frame_until_fire = 20
+        elif self.frame_until_fire > 0:
+            self.frame_until_fire -= 1
+
 
     def update(self):
         self.check_health()
         self.moveToPlayer()
+        self.fire()
+        self.update_enemy_bullets()
        # self.check_collide()
         self.map.update_entity_location(self.name, self.position_x, self.position_y)
         self.screen.blit(self.image, self.tank_rec)
     
     def get_distance_to_player(self):
         # returns the manhattan distace to the player 
-        return ((self.player.postion_x - self.position_x) * (self.player.postion_x - self.position_x)) \
+        return ((self.player.position_x - self.position_x) * (self.player.position_x - self.position_x)) \
         + ((self.player.position_y - self.position_y) * (self.player.position_y - self.position_y))
 
     def is_path_to_player_obstructed(self):
         print('jasdfnoksdl')
+        angle = self.get_angle()
+        distance = self.get_distance_to_player()
+
+
+
+
 
 
 
@@ -155,5 +180,23 @@ class tank(enemy, entity):
         # need to dodge the closest entity 
 
     
+
+    def get_firing_position(self): 
+        firing_position = self.position_x + self.DEFAULT_IMAGE_SIZE[0] / 2 - 5, self.position_y + self.DEFAULT_IMAGE_SIZE[1] / 2
+        return firing_position
+
+    def update_enemy_bullets(self):
+        for bullet in self.enemy_bullets:
+            print(bullet)
+
+
+            bullet.update()
+
+
+
+ 
+
+        # let's get the center of the image 
+
 
 

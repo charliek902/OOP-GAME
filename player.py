@@ -23,7 +23,7 @@ class player(entity):
         self.state = state
         player_health = health(100)
         self.health = player_health.get_health()
-        self.points = points
+        self.points = points 
         self.map = map
         self.reloading = False
         self.screen = pygame.display.set_mode((800, 400))
