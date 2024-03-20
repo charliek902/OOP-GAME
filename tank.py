@@ -24,7 +24,7 @@ class tank(enemy, entity):
         self.tank_rec = self.image.get_rect(topleft = (self.position_x, self.position_y))
         self.name = self.set_hash_name(map)
         self.map = map
-        self.move_strategy = tankMovement(self.map)
+        self.move_strategy = tankMovement(self.map, self.player, self.position_x, self.position_y)
         self.angle = -90
         self.type = type
         self.frame_until_fire = 0
