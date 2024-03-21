@@ -19,7 +19,6 @@ class tankMovement():
                 next_x = possible_x + dx
                 next_y = possible_y + dy 
 
-                # do need to store the last / previous distance that was recorde... 
                 if self.check_closer_to_player(next_x, next_y, distance) and not self.check_if_coordinate_in_wall(next_x, next_y):
                     path.append([next_x, next_y])
                     return dfs(next_x, next_y)
@@ -32,22 +31,16 @@ class tankMovement():
         directions = [[0, 10], [10, 0], [0, -10], [-10, 0]]
         return dfs(possible_x, possible_y)
 
-    
-        
     def check_closer_to_player(self, next_x, next_y, prev_distance):
         if self.get_distance_to_player(next_x, next_y) < prev_distance:
             return True
         return False
 
     def check_if_coordinate_in_wall(self, next_x, next_y):
-        walls = self.map.get_wall_locations()
+        walls = self.map.get_walls()
         for wall in walls:
-            # check if postion x <= next_x <= check postion x + wall length and 
-            # check if postion y <= next_y <= check postion y + wall length  
-            # if so for one wall then return True
-            return True
-            
-
+            if wall.position_x <= next_x <= wall.position_x + wall.DEFAULT_IMAGE_SIZE[0] or wall.position_y <= next_y <= wall.position_y + wall.DEFAULT_IMAGE_SIZE[1]:
+                return True
         return False
 
     def get_distance_to_player(self, x, y):

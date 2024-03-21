@@ -16,6 +16,7 @@ class tank(enemy, entity):
         self.position_x = position_x
         self.position_y = position_y
         self.health = health
+        self.speed = 7
         self.player = player
         self.screen = pygame.display.set_mode((800, 400))
         self.DEFAULT_IMAGE_SIZE = (25, 25)
@@ -40,20 +41,17 @@ class tank(enemy, entity):
     def get_angle(self):
         return self.angle
     
-    def get_angle_to_player(self):
-         # Calculate angle towards the player 
-        dx = self.player.position_x - self.position_x
-        dy = self.player.position_y - self.position_y
+    def get_angle_to_object(self, x, y):
+        dx = x - self.position_x
+        dy = y - self.position_y
         angle_to_player = math.degrees(math.atan2(dy, dx))
 
-        # Calculate angle difference between current angle and angle to player
         angle_difference = (angle_to_player - self.angle) % 360
         return angle_difference
-
-
-    def turnToPlayer(self):
-
-        angle_difference = self.get_angle_to_player()
+    
+    
+    def turnToPoint(self, x, y):
+        angle_difference = self.get_angle_to_object(x, y)
         angle_difference *= -1
 
         self.image = pygame.image.load('game_images/red_tank.png').convert()
@@ -62,31 +60,38 @@ class tank(enemy, entity):
         # Update tank's image with rotated one
         self.image = pygame.transform.rotate(self.image, angle_difference)
 
- 
+
+# turn and move towards the first point on the path.... 
+
     def moveToPlayer(self):
         distance = self.get_distance_to_player()
         if distance > 20000:
             path = self.move_strategy.generateDfsPath(self.position_x, self.position_y)
-
             print(path)
             if path:
                 first_point = path[0]
-                print(first_point)
-            # angle and move towards the first point on the generated dfs path... 
+                self.turnToPoint(first_point[0], first_point[1])
+                # now angled towards the point on the map 
+                self.tank_rec.x -= (self.speed + 0.7) * math.sin(math.radians(self.angle - 90))
+                self.tank_rec.y -= (self.speed + 0.7) * math.cos(math.radians(self.angle - 90))
+                self.position_x = self.tank_rec.x
+                self.position_y = self.tank_rec.y
+
+
+   
+            
 
     
     def check_health(self):
-        print(self.health)
-
         if self.health <= 0:
             self.state = 'DEAD'
 
     def fire(self):
         distance = self.get_distance_to_player()
         if distance < 20000 and self.frame_until_fire == 0:
-            self.turnToPlayer()
+            self.turnToPoint(self.player.position_x, self.player.position_y)
             firing_position = self.get_firing_position()
-            angle = self.get_angle_to_player()
+            angle = self.get_angle_to_object(self.player.position_x, self.player.position_y)
             enemy_bullet = bullet('alive', firing_position[0], firing_position[1], 100, 'BULLET', angle * -1 + 90, self.map, self.game, 'TANK')
             self.enemy_bullets.append(enemy_bullet)
             self.frame_until_fire = 20

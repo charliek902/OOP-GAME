@@ -50,6 +50,9 @@ class map():
     # basically just need to increase x by 25 and y by 25 
     def get_wall_locations(self):
         return self.wall_coordinates
+    
+    def get_walls(self):
+        return self.walls
 
     # want to generate 12 walls for the game which are roughly spaced out 
     def generate_walls(self):
