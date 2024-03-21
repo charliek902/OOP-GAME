@@ -65,14 +65,15 @@ class tank(enemy, entity):
  
     def moveToPlayer(self):
         distance = self.get_distance_to_player()
-        '''
         if distance > 20000:
             path = self.move_strategy.generateDfsPath(self.position_x, self.position_y)
+
+            print(path)
             if path:
                 first_point = path[0]
                 print(first_point)
             # angle and move towards the first point on the generated dfs path... 
-        '''
+
     
     def check_health(self):
         print(self.health)

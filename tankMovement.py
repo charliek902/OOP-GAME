@@ -20,10 +20,11 @@ class tankMovement():
                 next_y = possible_y + dy 
 
                 # do need to store the last / previous distance that was recorde... 
-                if self.check_closer_to_player(next_x, next_y) and not self.check_if_coordinate_in_wall(next_x, next_y):
+                if self.check_closer_to_player(next_x, next_y, distance) and not self.check_if_coordinate_in_wall(next_x, next_y):
                     path.append([next_x, next_y])
                     return dfs(next_x, next_y)
-            path.pop()
+                
+            if len(path) > 0: path.pop()
        
         path = []
         path.append([possible_x, possible_y])
@@ -33,21 +34,26 @@ class tankMovement():
 
     
         
-    def check_closer_to_player(self, next_x, next_y):
-        print('checks if coordinate is closer to the player!')
-        return True
-    
+    def check_closer_to_player(self, next_x, next_y, prev_distance):
+        if self.get_distance_to_player(next_x, next_y) < prev_distance:
+            return True
+        return False
+
     def check_if_coordinate_in_wall(self, next_x, next_y):
-        print('checks if the coordinate is in a wall!')
+        walls = self.map.get_wall_locations()
+        for wall in walls:
+            # check if postion x <= next_x <= check postion x + wall length and 
+            # check if postion y <= next_y <= check postion y + wall length  
+            # if so for one wall then return True
+            return True
+            
+
         return False
 
     def get_distance_to_player(self, x, y):
         # returns the manhattan distace to the player 
         return ((self.player.position_x - x) * (self.player.position_x - x)) \
         + ((self.player.position_y - y) * (self.player.position_y - y))
-    
-
-# TANK SHOULD GET COORDINATES, TURN TOWARDS THEM UNTIL DISTANCE ---> THEN TANK SHOULD AIM AND FIRE AT ENEMY 
     
 
 
