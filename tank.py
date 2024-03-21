@@ -29,6 +29,7 @@ class tank(enemy, entity):
         self.angle = -90
         self.type = type
         self.frame_until_fire = 0
+        self.frame_until_move = 10
         self.game = game
         self.enemy_bullets = []
     
@@ -74,19 +75,23 @@ class tank(enemy, entity):
     def moveToPlayer(self):
         distance = self.get_distance_to_player()
 
-        if distance >= 300 and self.position_x > 0 and self.position_x < 400 and self.position_y > 0 and self.position_y <= 700:
+        if distance >= 200 and self.position_x > 0 and self.position_x < 800 and self.position_y > 0 and self.position_y <= 800 and self.frame_until_move == 0:
             path = self.move_strategy.generateDfsPath(self.position_x, self.position_y)
             if path:
                 self.turnToPoint(self.player.position_x, self.player.position_y)
                 for coordinate in path:
                     if coordinate[0] < self.position_x and coordinate[1] < self.position_y:
-                        self.move_player(-5, -5)
+                        self.move_player(-1, -1)
                     elif coordinate[0] < self.position_x and coordinate[1] > self.position_y:
-                        self.move_player(-5, 5)
+                        self.move_player(-1, 1)
                     elif coordinate[0] > self.position_x and coordinate[1] < self.position_y:
-                        self.move_player(5, -5)
+                        self.move_player(1, -1)
                     elif coordinate[0] > self.position_x and coordinate[1] > self.position_y:
-                        self.move_player(5, 5)
+                        self.move_player(1, 1)
+                self.frame_until_move = 20
+        if self.frame_until_move > 0 : self.frame_until_move -= 1
+        
+
 
     def check_health(self):
         if self.health <= 0:
@@ -94,14 +99,13 @@ class tank(enemy, entity):
 
     def fire(self):
         distance = self.get_distance_to_player()
-        print(distance)
-        if distance <= 300 and self.frame_until_fire == 0:
+        if distance <= 1000 and self.frame_until_fire == 0:
             self.turnToPoint(self.player.position_x, self.player.position_y)
             firing_position = self.get_firing_position()
             angle = self.get_angle_to_object(self.player.position_x, self.player.position_y)
             enemy_bullet = bullet('alive', firing_position[0], firing_position[1], 100, 'BULLET', angle * -1 + 90, self.map, self.game, 'TANK')
             self.enemy_bullets.append(enemy_bullet)
-            self.frame_until_fire = 20
+            self.frame_until_fire = 60
         elif self.frame_until_fire > 0:
             self.frame_until_fire -= 1
 
