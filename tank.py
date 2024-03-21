@@ -61,19 +61,18 @@ class tank(enemy, entity):
 
         # Update tank's image with rotated one
         self.image = pygame.transform.rotate(self.image, angle_difference)
+
  
     def moveToPlayer(self):
-
-        # check distance to player, if distance is a certain length ---> use the path, turn towards the first point on the path
-        # and move towards it 
-        # else, turn to the player and fire at the player 
-        path = self.move_strategy.generateDfsPath(self.x, self.y)
-
-        # if path
- 
-        self.turnToPlayer()
-
-        # I think we need to implement a strategy class here
+        distance = self.get_distance_to_player()
+        '''
+        if distance > 20000:
+            path = self.move_strategy.generateDfsPath(self.position_x, self.position_y)
+            if path:
+                first_point = path[0]
+                print(first_point)
+            # angle and move towards the first point on the generated dfs path... 
+        '''
     
     def check_health(self):
         print(self.health)
@@ -81,18 +80,12 @@ class tank(enemy, entity):
         if self.health <= 0:
             self.state = 'DEAD'
 
-    def followPath(self, path):
-        # should turn to the coordinate on the path 
-        # and then move towards it... 
-
-        print('now we need to move to the player...')
-
     def fire(self):
         distance = self.get_distance_to_player()
-        if distance < 15000 and self.frame_until_fire == 0:
+        if distance < 20000 and self.frame_until_fire == 0:
+            self.turnToPlayer()
             firing_position = self.get_firing_position()
             angle = self.get_angle_to_player()
-            player_position = (self.player.position_x, self.player.position_y)
             enemy_bullet = bullet('alive', firing_position[0], firing_position[1], 100, 'BULLET', angle * -1 + 90, self.map, self.game, 'TANK')
             self.enemy_bullets.append(enemy_bullet)
             self.frame_until_fire = 20

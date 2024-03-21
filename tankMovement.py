@@ -9,25 +9,24 @@ class tankMovement():
         self.x = x
         self.y = y
 
-
-
-    def generateDfsPath(self):
-        def dfs(self, possible_x, possible_y):
+    def generateDfsPath(self, possible_x, possible_y):
+        def dfs(possible_x, possible_y):
             distance = self.get_distance_to_player(possible_x, possible_y)
-            if distance < 1000:
+            if distance < 20000:
                 return path
 
             for dx, dy in directions:
                 next_x = possible_x + dx
                 next_y = possible_y + dy 
+
+                # do need to store the last / previous distance that was recorde... 
                 if self.check_closer_to_player(next_x, next_y) and not self.check_if_coordinate_in_wall(next_x, next_y):
                     path.append([next_x, next_y])
                     return dfs(next_x, next_y)
             path.pop()
        
         path = []
-        possible_x = self.x
-        possible_y = self.y
+        path.append([possible_x, possible_y])
         # DIRECTIONS TO GO RIGHT, DOWN, LEFT AND UP 10 PIXELS 
         directions = [[0, 10], [10, 0], [0, -10], [-10, 0]]
         return dfs(possible_x, possible_y)
@@ -36,10 +35,11 @@ class tankMovement():
         
     def check_closer_to_player(self, next_x, next_y):
         print('checks if coordinate is closer to the player!')
+        return True
     
     def check_if_coordinate_in_wall(self, next_x, next_y):
         print('checks if the coordinate is in a wall!')
-        return True
+        return False
 
     def get_distance_to_player(self, x, y):
         # returns the manhattan distace to the player 

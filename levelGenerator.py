@@ -27,6 +27,7 @@ class levelGenerator():
     def update(self):
         if len(self.map.get_enemy_tanks()) == 0:
             self.level_up()
+            self.player.set_health(100)
         else:
             enemies = self.enemy_tank_factory.get_enemies()
             self.remaining_enemy_tanks = len(enemies)

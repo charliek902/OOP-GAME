@@ -32,6 +32,9 @@ class player(entity):
         self.rotation_speed = rotation_speed
         self.frames_until_player_can_fire = 0
 
+    def set_health(self, health):
+        self.health = health
+
     def check_health(self):
         if self.health <= 0:
             self.state = 'DEATH'
