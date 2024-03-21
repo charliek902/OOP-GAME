@@ -1,6 +1,5 @@
 import pygame
 
-# will probably need to pass in the game state in here and also the main character 
 
 class keyboardHandler():
     def __init__(self, renderer, player):

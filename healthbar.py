@@ -1,9 +1,6 @@
 from entity import entity
 import pygame
 
-
-#700, 10, 60, 20, 100, game_state.test_surface, shooter.health)
-
 class healthbar(entity):
     def __init__(self, x_position, y_position, width, height, points, screen, player):
 

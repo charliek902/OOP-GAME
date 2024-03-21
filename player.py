@@ -125,7 +125,6 @@ class player(entity):
         if self.frames_until_player_can_fire > 0:
             self.frames_until_player_can_fire -= 1
 
-        # could update player point score here... 
         self.screen.blit(self.image, self.shooter_rec)
     
     def update_player_bullets(self):
@@ -145,8 +144,6 @@ class player(entity):
             self.bullets.append(bullet_created)
             self.frames_until_player_can_fire = 20
         
-
-    # this function also needs to check the angle of the player as well, 
 
     def check_can_move(self):
         possible_x_position = self.shooter_rec.x - self.speed * math.sin(math.radians(self.angle - 90))

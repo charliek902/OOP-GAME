@@ -22,7 +22,6 @@ class levelGenerator():
     
     def render_level_up(self):
         self.rendering = True
-        print('levelling up appear on the screen')
     
     def update(self):
         if len(self.map.get_enemy_tanks()) == 0:

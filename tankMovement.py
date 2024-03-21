@@ -12,7 +12,7 @@ class tankMovement():
     def generateDfsPath(self, possible_x, possible_y):
         path = []
         path.append([possible_x, possible_y])
-        # DIRECTIONS TO GO RIGHT, DOWN, LEFT AND UP 10 PIXELS 
+        # DIRECTIONS 
         directions = [[0, -5], [-5, 0], [0, 5], [5, 0]]
         
         def dfs(possible_x, possible_y, directions):
@@ -32,20 +32,8 @@ class tankMovement():
 
     def check_closer_to_player(self, next_x, next_y, prev_distance):
         current_distace = self.get_distance_to_player(next_x, next_y)
-        print('prev distance')
-        print(prev_distance)
-        print('current distance:')
-        print(self.get_distance_to_player(next_x, next_y))
-
         if current_distace < prev_distance:
             return True
-        return False
-
-    def check_if_coordinate_in_wall(self, next_x, next_y):
-        walls = self.map.get_walls()
-        for wall in walls:
-            if wall.position_x <= next_x <= wall.position_x + wall.DEFAULT_IMAGE_SIZE[0] or wall.position_y <= next_y <= wall.position_y + wall.DEFAULT_IMAGE_SIZE[1]:
-                return True
         return False
 
     def get_distance_to_player(self, x, y):

@@ -9,7 +9,6 @@ class tankFactory():
         self.level = 1
         self.enemies = 0
         self.health = 20
-        # 16 will be the maximum amount of enemy tanks that will face the user in a single round... 
         self.maximum_tanks = 17
         self.map = map
         self.player = player
@@ -17,13 +16,12 @@ class tankFactory():
         self.enemy_starting_coordinates = []
         self.game = game
     
-    # we need to create L, R, Up and Down tanks of the screen... 
     def generate_random_coordinates(self):
-        x = random.randint(0, 400)
-        y = random.randint(0, 400)
+        x = random.randint(-100, 0)
+        y = random.randint(-100, 0)
         while (x, y) in self.enemy_starting_coordinates:
-            x = random.randint(0, 400)
-            y = random.randint(0, 400)
+            x = random.randint(-100, 0)
+            y = random.randint(-100, 0)
         self.enemy_starting_coordinates.append([x, y])
         return x, y
 
@@ -35,9 +33,7 @@ class tankFactory():
             self.enemies = 1
         if self.health < 100:
             self.health += 10
-        
-        # need to put enemy tanks in different locations... (really important now)
-            
+         
         for i in range(0, self.enemies):
             x, y = self.generate_random_coordinates()
             enemy_tank = tank('SEARCH', x, y, self.health, self.player, self.map, 'TANK', self.game)
