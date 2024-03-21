@@ -10,26 +10,25 @@ class tankMovement():
         self.y = y
 
     def generateDfsPath(self, possible_x, possible_y):
-        def dfs(possible_x, possible_y):
+        path = []
+        path.append([possible_x, possible_y])
+        # DIRECTIONS TO GO RIGHT, DOWN, LEFT AND UP 10 PIXELS 
+        directions = [[0, -10], [-10, 0], [0, 10], [10, 0]]
+        
+        def dfs(possible_x, possible_y, directions):
             distance = self.get_distance_to_player(possible_x, possible_y)
-            if distance < 20000:
+            if distance < 50:
                 return path
 
             for dx, dy in directions:
                 next_x = possible_x + dx
                 next_y = possible_y + dy 
 
-                if self.check_closer_to_player(next_x, next_y, distance) and not self.check_if_coordinate_in_wall(next_x, next_y):
+                if self.check_closer_to_player(next_x, next_y, distance):
                     path.append([next_x, next_y])
-                    return dfs(next_x, next_y)
-                
-            if len(path) > 0: path.pop()
-       
-        path = []
-        path.append([possible_x, possible_y])
-        # DIRECTIONS TO GO RIGHT, DOWN, LEFT AND UP 10 PIXELS 
-        directions = [[0, 10], [10, 0], [0, -10], [-10, 0]]
-        return dfs(possible_x, possible_y)
+                    return dfs(next_x, next_y, directions)
+
+        return dfs(possible_x, possible_y, directions)
 
     def check_closer_to_player(self, next_x, next_y, prev_distance):
         if self.get_distance_to_player(next_x, next_y) < prev_distance:
@@ -44,9 +43,9 @@ class tankMovement():
         return False
 
     def get_distance_to_player(self, x, y):
-        # returns the manhattan distace to the player 
-        return ((self.player.position_x - x) * (self.player.position_x - x)) \
-        + ((self.player.position_y - y) * (self.player.position_y - y))
+        # Returns the Manhattan distance to the player
+        return abs(self.player.position_x - x) + abs(self.player.position_y - y)
+
     
 
 

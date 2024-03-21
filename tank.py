@@ -16,7 +16,7 @@ class tank(enemy, entity):
         self.position_x = position_x
         self.position_y = position_y
         self.health = health
-        self.speed = 7
+        self.speed = 2
         self.player = player
         self.screen = pygame.display.set_mode((800, 400))
         self.DEFAULT_IMAGE_SIZE = (25, 25)
@@ -65,23 +65,25 @@ class tank(enemy, entity):
 
     def moveToPlayer(self):
         distance = self.get_distance_to_player()
-        if distance > 20000:
+
+        if distance > 3000:
             path = self.move_strategy.generateDfsPath(self.position_x, self.position_y)
             print(path)
             if path:
                 first_point = path[0]
+                print('first point')
+                print(first_point)
+                print('player coordinates:')
+                print(self.player.position_x)
+                print(self.player.position_y)
+
+                # problem right now is the turning to the points on the path.... 
                 self.turnToPoint(first_point[0], first_point[1])
-                # now angled towards the point on the map 
-                self.tank_rec.x -= (self.speed + 0.7) * math.sin(math.radians(self.angle - 90))
-                self.tank_rec.y -= (self.speed + 0.7) * math.cos(math.radians(self.angle - 90))
+                self.tank_rec.x -= (self.speed + 0.7) * math.sin(math.radians(self.angle))
+                self.tank_rec.y -= (self.speed + 0.7) * math.cos(math.radians(self.angle))
                 self.position_x = self.tank_rec.x
                 self.position_y = self.tank_rec.y
 
-
-   
-            
-
-    
     def check_health(self):
         if self.health <= 0:
             self.state = 'DEAD'
