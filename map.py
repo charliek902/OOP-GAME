@@ -46,22 +46,6 @@ class map():
         self.entity_map[object_name] = [x_position, y_position]
 
 
-    # here we want to filter the map for the entities which are closest to the object (I say within 50 pixels)
-    def get_nearby_entities_on_trajectory(self, object):
-        entities_to_dodge = []
-        heapq.heapify(entities_to_dodge)
-        # here we need to filter the entities and get entities and their types within the radius of the entitiy in question
-        nearby_entities = self.entities.filter(self.retrieve_entities(object), self.entities)
-        for entity in nearby_entities:
-            if entity.type == 'BULLET' or entity.type == 'TANK':
-                distance = 0
-                # need to calculate the distance between the player and the entity and also need to 
-                # calculate the trajectory of the entity and whether it will hit the tank 
-                
-                heapq.heappush(entities_to_dodge, (distance, entity))
-
-        return entities_to_dodge
-
     def get_entities(self):
         return self.entity_map
     
