@@ -59,30 +59,34 @@ class tank(enemy, entity):
 
         # Update tank's image with rotated one
         self.image = pygame.transform.rotate(self.image, angle_difference)
+    
+    def move_player(self, x, y):
+        self.tank_rec.x += x
+        self.tank_rec.y += y
+        self.position_x = self.tank_rec.x
+        self.position_y = self.tank_rec.y
+        self.screen.blit(self.image, self.tank_rec)
 
 
-# turn and move towards the first point on the path.... 
+# incorporate a move rate idea + incorporate wall movement now... 
+
 
     def moveToPlayer(self):
         distance = self.get_distance_to_player()
 
-        if distance > 3000:
+        if distance >= 300 and self.position_x > 0 and self.position_x < 400 and self.position_y > 0 and self.position_y <= 700:
             path = self.move_strategy.generateDfsPath(self.position_x, self.position_y)
-            print(path)
             if path:
-                first_point = path[0]
-                print('first point')
-                print(first_point)
-                print('player coordinates:')
-                print(self.player.position_x)
-                print(self.player.position_y)
-
-                # problem right now is the turning to the points on the path.... 
-                self.turnToPoint(first_point[0], first_point[1])
-                self.tank_rec.x -= (self.speed + 0.7) * math.sin(math.radians(self.angle))
-                self.tank_rec.y -= (self.speed + 0.7) * math.cos(math.radians(self.angle))
-                self.position_x = self.tank_rec.x
-                self.position_y = self.tank_rec.y
+                self.turnToPoint(self.player.position_x, self.player.position_y)
+                for coordinate in path:
+                    if coordinate[0] < self.position_x and coordinate[1] < self.position_y:
+                        self.move_player(-5, -5)
+                    elif coordinate[0] < self.position_x and coordinate[1] > self.position_y:
+                        self.move_player(-5, 5)
+                    elif coordinate[0] > self.position_x and coordinate[1] < self.position_y:
+                        self.move_player(5, -5)
+                    elif coordinate[0] > self.position_x and coordinate[1] > self.position_y:
+                        self.move_player(5, 5)
 
     def check_health(self):
         if self.health <= 0:
@@ -90,7 +94,8 @@ class tank(enemy, entity):
 
     def fire(self):
         distance = self.get_distance_to_player()
-        if distance < 20000 and self.frame_until_fire == 0:
+        print(distance)
+        if distance <= 300 and self.frame_until_fire == 0:
             self.turnToPoint(self.player.position_x, self.player.position_y)
             firing_position = self.get_firing_position()
             angle = self.get_angle_to_object(self.player.position_x, self.player.position_y)
@@ -110,9 +115,7 @@ class tank(enemy, entity):
     
     def get_distance_to_player(self):
         # returns the manhattan distace to the player 
-        return ((self.player.position_x - self.position_x) * (self.player.position_x - self.position_x)) \
-        + ((self.player.position_y - self.position_y) * (self.player.position_y - self.position_y))
-
+         return abs(self.player.position_x - self.position_x) + abs(self.player.position_y - self.position_y)
 
     def get_firing_position(self): 
         firing_position = self.position_x + self.DEFAULT_IMAGE_SIZE[0] / 2 - 5, self.position_y + self.DEFAULT_IMAGE_SIZE[1] / 2

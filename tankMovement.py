@@ -13,11 +13,11 @@ class tankMovement():
         path = []
         path.append([possible_x, possible_y])
         # DIRECTIONS TO GO RIGHT, DOWN, LEFT AND UP 10 PIXELS 
-        directions = [[0, -10], [-10, 0], [0, 10], [10, 0]]
+        directions = [[0, -5], [-5, 0], [0, 5], [5, 0]]
         
         def dfs(possible_x, possible_y, directions):
             distance = self.get_distance_to_player(possible_x, possible_y)
-            if distance < 50:
+            if distance <= 50:
                 return path
 
             for dx, dy in directions:
@@ -31,7 +31,13 @@ class tankMovement():
         return dfs(possible_x, possible_y, directions)
 
     def check_closer_to_player(self, next_x, next_y, prev_distance):
-        if self.get_distance_to_player(next_x, next_y) < prev_distance:
+        current_distace = self.get_distance_to_player(next_x, next_y)
+        print('prev distance')
+        print(prev_distance)
+        print('current distance:')
+        print(self.get_distance_to_player(next_x, next_y))
+
+        if current_distace < prev_distance:
             return True
         return False
 
