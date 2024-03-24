@@ -142,7 +142,7 @@ class player(entity):
             firing_position = self.get_firing_position()
             bullet_created = bullet('alive', firing_position[0], firing_position[1], 100, 'BULLET', self.angle, self.map, self.game, 'PLAYER')
             self.bullets.append(bullet_created)
-            self.frames_until_player_can_fire = 20
+            self.frames_until_player_can_fire = 5
         
 
     def check_can_move(self):
