@@ -97,7 +97,7 @@ class tank(enemy, entity):
             angle = self.get_angle_to_object(self.player.position_x, self.player.position_y)
             enemy_bullet = bullet('alive', firing_position[0], firing_position[1], 100, 'BULLET', angle * -1 + 90, self.map, self.game, 'TANK')
             self.enemy_bullets.append(enemy_bullet)
-            self.frame_until_fire = 60
+            self.frame_until_fire = 300
         elif self.frame_until_fire > 0:
             self.frame_until_fire -= 1
 
